@@ -23,7 +23,7 @@ Each example contains a `README.md` with an explanation about the field-type.
 <!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
 | Example  | Author |
 |:-------|:------:|
-| **[Clean Up Field ](https://github.com/storyblok/field-type-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all Stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
+| **[Clean Up Field Script ](https://github.com/storyblok/field-type-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 

@@ -4,7 +4,7 @@ This script removes a specific field from all stories.
 
 Name | Description | Author
 ------------ | ------------- | -------------
-Clean Up Field | A tool to remove a specific field from all Stories | [Alexander Feiglstorfer](https://github.com/onefriendaday)
+Clean Up field script | A tool to remove a specific field from all stories | [Alexander Feiglstorfer](https://github.com/onefriendaday)
 
 
 ## How to use
