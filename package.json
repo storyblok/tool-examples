@@ -1,0 +1,21 @@
+{
+    "name": "field-type-examples",
+    "version": "0.0.0",
+    "description": "a collection of field-types from the community",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint .",
+        "docs": "node generate-readme.js"
+    },
+    "keywords": [
+        "storyblok"
+    ],
+    "dependencies": {
+        "gray-matter": "^4.0.2",
+        "markdown-magic": "^0.1.25"
+    },
+    "devDependencies": {
+        "eslint": "^7.17.0",
+        "eslint-plugin-vue": "^7.4.1"
+    }
+}

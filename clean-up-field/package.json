@@ -1,0 +1,14 @@
+{
+  "name": "clean-up-field",
+  "version": "1.0.0",
+  "description": "This script removes a specific field from all stories.",
+  "main": "clean-up-field.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "storyblok-js-client": "^3.3.1"
+  }
+}

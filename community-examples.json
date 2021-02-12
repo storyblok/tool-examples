@@ -1,0 +1,11 @@
+[{
+        "name": "sb-mig",
+        "description": "CLI tool to handle migrations and components in Storyblok",
+        "githubUrl": "https://github.com/sb-mig/sb-mig"
+    },
+    {
+        "name": "Storyblok Migrate",
+        "description": "Migration tool from Storyblok (Import/Export of schemas and content)",
+        "githubUrl": "https://github.com/maoberlehner/storyblok-migrate"
+    }
+]
