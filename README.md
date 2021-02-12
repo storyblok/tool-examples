@@ -9,16 +9,17 @@ A collection of tools for Storyblok created by the community. Read more about cr
 <details>
 <summary>Table of Content</summary>
 
-- [Examples](#examples)
-- [Example Repositories](#example-repositories)
-- [Contributing](#contributing)
+- [Tool Examples](#tool-examples)
+  - [Examples](#examples)
+  - [Example Repositories](#example-repositories)
+  - [Contributing](#contributing)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 ## Examples
 
-Each example contains a `README.md` with an explanation about the field-type.
+Each example contains a `README.md` with an explanation about the tool.
 
 <!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
 | Example  | Author |
