@@ -1,11 +1,11 @@
-# Migrate Assets
+# Clone Assets
 
-This script can be used to migrate assets from a space to a cloned space, in order to have the assets stored in the cloned one. 
+This script can be used to clone assets from a space to a cloned space, in order to have the assets stored in the cloned one. 
 Once all the assets are stored in the target space, the script will replace the url of the assets in the entries of that space and it'll update them keeping the correct publish/unpublish status.
 
 Name | Description | Author
 ------------ | ------------- | -------------
-Move Assets | A tool to clone assets from a space to its clone | [Christian Zoppi](https://github.com/christianzoppi)
+Clone Assets | A tool to clone assets from a space to its clone | [Christian Zoppi](https://github.com/christianzoppi)
 
 
 ## How to use

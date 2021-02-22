@@ -1,7 +1,7 @@
 {
-  "name": "migrate-assets",
+  "name": "clone-assets",
   "version": "0.1.0",
-  "description": "Migrate assets from a Storyblok space to another, replacing URLs in content.",
+  "description": "Clone assets from a Storyblok space to another, replacing URLs in content.",
   "main": "index.js",
   "type": "module",
   "engines": {

@@ -24,7 +24,7 @@ Each example contains a `README.md` with an explanation about the tool.
 | Example  | Author |
 |:-------|:------:|
 | **[Clean Up Field Script ](https://github.com/storyblok/field-type-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
-| **[Move Assets ](https://github.com/storyblok/field-type-examples/tree/main/migrate-assets)** <br/>  A tool to clone assets from a space to its clone  |  [Christian Zoppi](https://github.com/christianzoppi) |
+| **[Clone Assets ](https://github.com/storyblok/field-type-examples/tree/main/clone-assets)** <br/>  A tool to clone assets from a space to its clone  |  [Christian Zoppi](https://github.com/christianzoppi) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
