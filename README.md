@@ -9,10 +9,9 @@ A collection of tools for Storyblok created by the community. Read more about cr
 <details>
 <summary>Table of Content</summary>
 
-- [Tool Examples](#tool-examples)
-  - [Examples](#examples)
-  - [Example Repositories](#example-repositories)
-  - [Contributing](#contributing)
+- [Examples](#examples)
+- [Example Repositories](#example-repositories)
+- [Contributing](#contributing)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
@@ -25,6 +24,7 @@ Each example contains a `README.md` with an explanation about the tool.
 | Example  | Author |
 |:-------|:------:|
 | **[Clean Up Field Script ](https://github.com/storyblok/field-type-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
+| **[This Script Can Be Used To Migrate Assets From A Space To A Cloned Space, In Order To Have The Assets Stored In The Cloned One. ](https://github.com/storyblok/field-type-examples/tree/main/migrate-assets)** <br/> undefined | undefined |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
