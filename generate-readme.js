@@ -45,7 +45,7 @@ const config = {
         const tableIndex = readme.indexOf(tableLine);
         const [name, description, author] = readme[tableIndex + 2].split('|');
         const dirname = path.dirname(example);
-        const exampleUrl = `https://github.com/storyblok/field-type-examples/tree/main/${dirname}`;
+        const exampleUrl = `https://github.com/storyblok/tool-examples/tree/main/${dirname}`;
         // add table rows
         md += `| **[${formatPluginName(name)}](${exampleUrl})** <br/> ${description} | ${author} |\n`;
       });

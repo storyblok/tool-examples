@@ -3,7 +3,7 @@
 
 # Tool Examples
 
-A collection of tools for Storyblok created by the community. Read more about creating tools [here](https://www.storyblok.com/docs/plugins/introduction)
+A collection of tools & scripts for Storyblok created by the community.
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Table of Content) -->
 <details>
@@ -23,8 +23,8 @@ Each example contains a `README.md` with an explanation about the tool.
 <!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
 | Example  | Author |
 |:-------|:------:|
-| **[Clean Up Field Script ](https://github.com/storyblok/field-type-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
-| **[Clone Assets ](https://github.com/storyblok/field-type-examples/tree/main/clone-assets)** <br/>  A tool to clone assets from a space to its clone  |  [Christian Zoppi](https://github.com/christianzoppi) |
+| **[Clean Up Field Script ](https://github.com/storyblok/tool-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
+| **[Clone Assets ](https://github.com/storyblok/tool-examples/tree/main/clone-assets)** <br/>  A tool to clone assets from a space to its clone  |  [Christian Zoppi](https://github.com/christianzoppi) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 

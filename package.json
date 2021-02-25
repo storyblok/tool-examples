@@ -1,7 +1,7 @@
 {
-    "name": "field-type-examples",
+    "name": "tool-examples",
     "version": "0.0.0",
-    "description": "a collection of field-types from the community",
+    "description": "a collection of tools from the community",
     "main": "index.js",
     "scripts": {
         "lint": "eslint .",
