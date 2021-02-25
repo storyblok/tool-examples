@@ -9,10 +9,9 @@ A collection of tools for Storyblok created by the community. Read more about cr
 <details>
 <summary>Table of Content</summary>
 
-- [Tool Examples](#tool-examples)
-  - [Examples](#examples)
-  - [Example Repositories](#example-repositories)
-  - [Contributing](#contributing)
+- [Examples](#examples)
+- [Example Repositories](#example-repositories)
+- [Contributing](#contributing)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
@@ -25,6 +24,7 @@ Each example contains a `README.md` with an explanation about the tool.
 | Example  | Author |
 |:-------|:------:|
 | **[Clean Up Field Script ](https://github.com/storyblok/field-type-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
+| **[Clone Assets ](https://github.com/storyblok/field-type-examples/tree/main/clone-assets)** <br/>  A tool to clone assets from a space to its clone  |  [Christian Zoppi](https://github.com/christianzoppi) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
