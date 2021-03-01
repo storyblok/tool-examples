@@ -7,5 +7,15 @@
         "name": "Storyblok Migrate",
         "description": "Migration tool from Storyblok (Import/Export of schemas and content)",
         "githubUrl": "https://github.com/maoberlehner/storyblok-migrate"
+    },
+    {
+    	"name": "Storyblok Generate Component Typings",
+    	"description": "NodeJS tool to auto generate TypeScript types based on your components.x.json file",
+    	"githubUrl":"https://github.com/dohomi/storyblok-generate-ts"
+    },
+    {
+    	"name":"React - Rich Text Renderer for Storyblok in-built RTE",
+    	"description":"Renderer to outputs React elements, and provides options to map any Stoyblok rich text element to custom React components",
+    	"githubUrl":"https://github.com/dohomi/storyblok-rich-text-react-renderer-ts"
     }
 ]
