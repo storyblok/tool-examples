@@ -17,5 +17,10 @@
     	"name":"React - Rich Text Renderer for Storyblok in-built RTE",
     	"description":"Renderer to outputs React elements, and provides options to map any Stoyblok rich text element to custom React components",
     	"githubUrl":"https://github.com/dohomi/storyblok-rich-text-react-renderer-ts"
+    },
+    {
+    	"name":"Storyblok Toolkit",
+    	"description":"Batteries-included toolset for efficient development of React frontends with Storyblok",
+    	"githubUrl":"https://github.com/storyofams/storyblok-toolkit"
     }
 ]
