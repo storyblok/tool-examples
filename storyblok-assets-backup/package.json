@@ -1,0 +1,25 @@
+{
+  "name": "storyblok-assets-backup",
+  "version": "0.1.0",
+  "description": "Tool for differential backups of the assets of any Storyblok space.",
+  "main": "src/backup.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Zoppi",
+  "contributors": [
+    {
+      "name" : "Gerrit Plehn",
+      "email" : "gp@storyblok.com"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "async": "^3.2.1",
+    "aws-sdk": "^2.974.0",
+    "axios": "^0.21.1",
+    "glob": "^7.1.7",
+    "storyblok-js-client": "^4.1.3"
+  }
+}
