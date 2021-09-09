@@ -11,11 +11,11 @@
         "storyblok"
     ],
     "dependencies": {
-        "gray-matter": "^4.0.2",
+        "gray-matter": "^4.0.3",
         "markdown-magic": "^0.1.25"
     },
     "devDependencies": {
-        "eslint": "^7.17.0",
-        "eslint-plugin-vue": "^7.4.1"
+        "eslint": "^7.32.0",
+        "eslint-plugin-vue": "^7.17.0"
     }
 }
