@@ -7,7 +7,7 @@ export default class S3Storage extends BackupStorage {
     options.basePath = './temp'
     super(options)
     this.s3Client = new AWS.S3({ accessKeyId: options.s3Settings.accessKeyId, secretAccessKey: options.s3Settings.secretAccessKey })
-    this.bucket = options.bucket || 'sb-assets-backup'
+    this.bucket = options.s3Settings.bucket || 'sb-assets-backup'
     this.afterBackupCallback = () => {
       fs.rmdirSync('./temp', { recursive: true })
     }
