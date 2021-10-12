@@ -115,11 +115,14 @@ export default class Migration {
       let stories_list_management = stories_responses_management.map(r => r.data.stories).flat()
       this.stories_list.forEach(story => {
         let story_management = stories_list_management.find(s => s.uuid === story.uuid)
-        story.published = story_management.published
-        story.unpublished_changes = story_management.unpublished_changes
+        if (story_management) {
+          story.published = story_management.published
+          story.unpublished_changes = story_management.unpublished_changes
+        }
       })
       this.stepMessageEnd('1', `Stories fetched from target space.`)
     } catch (err) {
+      console.log(err)
       this.migrationError('Error fetching the stories. Please double check the target space id.')
     }
   }
