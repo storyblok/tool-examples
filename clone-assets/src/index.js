@@ -244,7 +244,12 @@ export default class Migration {
           } else {
             let asset_object = this.assets.find(item => item && item.original_url == asset)
             asset_object.new_url = signed_request.pretty_url
-            resolve({ success: true })
+
+            this.storyblok.get(`spaces/${this.target_space_id}/assets/${signed_request.id}/finish_upload`).then(() => {
+              resolve({ success: true })
+            }).catch(() => { 
+              resolve({ success: false })
+            })
           }
         })
       })
