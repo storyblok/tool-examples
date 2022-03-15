@@ -46,7 +46,7 @@ export default class Migration {
    */
   async start() {
     try {
-      fs.rmdirSync('./temp', { recursive: true })
+      fs.rmSync('./temp', { recursive: true })
       fs.mkdirSync('./temp')
       await this.getTargetSpaceToken()
       await this.getStories()
@@ -237,7 +237,7 @@ export default class Migration {
       return new Promise((resolve) => {
         form.submit(signed_request.post_url, (err) => {
           if (fs.existsSync(asset_data.filepath) || fs.existsSync(asset_data.folder)) {
-            fs.rmdirSync(asset_data.folder, { recursive: true })
+            fs.rmSync(asset_data.folder, { recursive: true })
           }
           if (err) {
             resolve({ success: false })
