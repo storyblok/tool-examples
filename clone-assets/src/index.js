@@ -46,7 +46,7 @@ export default class Migration {
    */
   async start() {
     try {
-      fs.rmSync('./temp', { recursive: true })
+      this.removeDirectory('./temp');
       fs.mkdirSync('./temp')
       await this.getTargetSpaceToken()
       await this.getStories()
@@ -237,7 +237,7 @@ export default class Migration {
       return new Promise((resolve) => {
         form.submit(signed_request.post_url, (err) => {
           if (fs.existsSync(asset_data.filepath) || fs.existsSync(asset_data.folder)) {
-            fs.rmSync(asset_data.folder, { recursive: true })
+            this.removeDirectory(asset_data.folder);
           }
           if (err) {
             resolve({ success: false })
@@ -319,5 +319,11 @@ export default class Migration {
     process.stdout.clearLine()
     this.stepMessageEnd('5', `Updated stories in target space.`)
     console.log(chalk.black.bgGreen(' ✓ Completed '), `${migration_result.filter(r => r.status === 'fulfilled' && r.value).length} ${migration_result.filter(r => r.status === 'fulfilled' && r.value).length === 1 ? 'story' : 'stories'} updated.`)
+  }
+
+   removeDirectory(path)  {
+    if(fs.existsSync(path)){
+      fs.rmSync(path, { recursive: true })
+    }
   }
 }
