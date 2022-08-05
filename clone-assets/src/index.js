@@ -7,11 +7,12 @@ import async from 'async'
 
 // Throttling
 export default class Migration {
-  constructor(oauth, source_space_id, target_space_id, simultaneous_uploads) {
+  constructor(oauth, source_space_id, target_space_id, simultaneous_uploads, region) {
     this.source_space_id = source_space_id
     this.target_space_id = target_space_id
     this.oauth = oauth
     this.simultaneous_uploads = simultaneous_uploads
+    this.region = region
     this.assets_retries = {}
     this.retries_limit = 4
   }
@@ -65,12 +66,14 @@ export default class Migration {
   async getTargetSpaceToken() {
     try {
       this.storyblok = new StoryblokClient({
-        oauthToken: this.oauth
+        oauthToken: this.oauth,
+        region: this.region
       })
       const space_request = await this.storyblok.get(`spaces/${this.target_space_id}`)
       this.target_space_token = space_request.data.space.first_token
       this.storyblok = new StoryblokClient({
         accessToken: this.target_space_token,
+        region: this.region,
         oauthToken: this.oauth,
         rateLimit: 3
       })

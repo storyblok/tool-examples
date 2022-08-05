@@ -23,9 +23,15 @@ const questions = [
     message: "Simultaneous Uploads",
     default: 20
   },
+  {
+    type: 'input',
+    name: 'region',
+    message: "Please enter the Region code. Leave empty for default UE region",
+    default: null
+  },
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  const migration = new Migration(answers.oauth, answers.source_space_id, answers.target_space_id, answers.simultaneous_uploads)
+  const migration = new Migration(answers.oauth, answers.source_space_id, answers.target_space_id, answers.simultaneous_uploads, answers.region)
   migration.start()
 })
