@@ -78,6 +78,7 @@ export default class Migration {
         rateLimit: 3
       })
     } catch (err) {
+      console.log(err)
       this.migrationError('Error trying to retrieve the space token. Please double check the target space id and the OAUTH token.')
     }
   }

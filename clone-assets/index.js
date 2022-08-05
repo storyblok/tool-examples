@@ -26,8 +26,8 @@ const questions = [
   {
     type: 'input',
     name: 'region',
-    message: "Region",
-    default: 'ue'
+    message: "Please enter the Region code. Leave empty for default UE region",
+    default: null
   },
 ]
 
