@@ -1,11 +1,11 @@
 {
   "name": "clone-assets",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Clone assets from a Storyblok space to another, replacing URLs in content.",
   "main": "index.js",
   "type": "module",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "scripts": {
     "start": "node index"
@@ -14,10 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "async": "^3.2.0",
-    "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "form-data": "^3.0.0",
     "inquirer": "^7.3.3",
-    "storyblok-js-client": "^4.5.6"
+    "storyblok-js-client": "^5.12.1"
   }
 }
