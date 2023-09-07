@@ -6,25 +6,29 @@ import {useCallback, useEffect, useState} from "react";
 export function useContext() {
   const [context, setContext] = useState(undefined)
 
-    const getContext = useCallback(() => window.parent.postMessage(
-        {
-            action: 'tool-changed',
-            tool: TOOL_ID,
-            event: 'getContext',
-        },
-        APP_ORIGIN
-    ),[]);
+   //usecallback?
+    const handleContext = ({data}:any) => {
+        if(data.action === 'get-context'){
+            setContext(data.story)
+        }
+    }
 
     useEffect(() => {
-        window.addEventListener('message', ({data}) => {
-            if(data.action === 'get-context'){
-                setContext(data.story)
-            }
-        })
+        window.parent.postMessage(
+            {
+                action: 'tool-changed',
+                tool: TOOL_ID,
+                event: 'getContext',
+            },
+            APP_ORIGIN
+        )
+        window.addEventListener('message', handleContext)
 
-
+        return () => {
+           window.removeEventListener('message', handleContext )
+        }
     },[])
 
 
-    return {context, getContext}
+    return {context}
 }

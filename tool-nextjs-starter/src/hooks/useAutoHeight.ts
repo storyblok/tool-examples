@@ -3,8 +3,9 @@ export const TOOL_ID = process.env.NEXT_PUBLIC_DEVELOPMENT_TOOL_ID;
 export const APP_ORIGIN = 'https://app.storyblok.com';
 
 export function useAutoHeight() {
-
     useEffect(() => {
+        const observer = new MutationObserver(
+            () => {
                 window.parent.postMessage(
                     {
                         action: 'tool-changed',
@@ -13,6 +14,20 @@ export function useAutoHeight() {
                         height: document.body.scrollHeight,
                     },
                     APP_ORIGIN
-                );
+                )
+            }
+
+        );
+
+        observer.observe(document.body, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+        });
+
+        return () => {
+            // cleanup function disconnect form the observer otherwise we would have multiple observers running?
+            observer.disconnect();
+        };
     }, []);
 }
