@@ -28,7 +28,7 @@ export default function Home(props: HomeProps) {
             .then((res) => res.json())
             .then((userInfo) => setUserInfo(userInfo))
             .catch((error) => {
-                console.error('Failed to fetch stories', error)
+                console.error('Failed to fetch user information:', error)
                 setUserInfo(undefined)
             })
     }, [])
