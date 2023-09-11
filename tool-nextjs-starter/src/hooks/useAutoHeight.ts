@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+
 export const TOOL_ID = process.env.NEXT_PUBLIC_DEVELOPMENT_TOOL_ID;
 export const APP_ORIGIN = 'https://app.storyblok.com';
 
@@ -16,7 +17,6 @@ export function useAutoHeight() {
                     APP_ORIGIN
                 )
             }
-
         );
 
         observer.observe(document.body, {

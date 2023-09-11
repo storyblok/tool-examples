@@ -1,24 +1,25 @@
 import {APP_ORIGIN, TOOL_ID} from "@/hooks/useAutoHeight";
-import { useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 
 type Story = {
-    name:string,
-    updated_at:string,
-    content:unknown,
-    published:boolean
+    name: string,
+    updated_at: string,
+    content: unknown,
+    published: boolean,
+    slug: string
     // partial type definition
 }
 
 type ToolContext = {
     action: 'get-context',
     language: string,
-    story:Story
+    story: Story
 }
 
 export function useToolContext() {
-  const [context, setContext] = useState<ToolContext|undefined>(undefined)
-    const handleContext = ({data}:MessageEvent<ToolContext>) => {
-        if(data.action === 'get-context'){
+    const [context, setContext] = useState<ToolContext | undefined>(undefined)
+    const handleContext = ({data}: MessageEvent<ToolContext>) => {
+        if (data.action === 'get-context') {
             setContext(data)
         }
     }
@@ -36,9 +37,9 @@ export function useToolContext() {
         window.addEventListener('message', handleContext)
 
         return () => {
-           window.removeEventListener('message', handleContext )
+            window.removeEventListener('message', handleContext)
         }
-    },[])
+    }, [])
 
     return context
 }

@@ -9,5 +9,5 @@ export default function Error401() {
         }
     }, []);
 
-return <span>TBD</span>
+    return <span>Error: Unauthorized</span>
 }
