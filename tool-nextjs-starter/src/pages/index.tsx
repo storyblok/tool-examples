@@ -2,14 +2,35 @@ import Head from 'next/head'
 import {GetServerSideProps} from "next";
 import {isAppSessionQuery} from "@storyblok/app-extension-auth";
 import {appSessionCookies} from "@/auth";
-import {useAutoHeight} from "@/hooks";
-import {useContext} from "@/hooks/getContext";
+import {useAutoHeight, useToolContext} from "@/hooks";
 import {isAdmin} from "@/utils";
+import {useEffect, useState} from "react";
 
-export default function Home() {
+type HomeProps = {
+    accessToken: string,
+    spaceId: string,
+    userId: string,
+    isAdmin: boolean
+}
+export default function Home(props:HomeProps) {
+    const [userInfo,setUserInfo] = useState<any|undefined>(undefined)
  useAutoHeight();
- //draft
- useContext();
+ const toolContext = useToolContext();
+
+
+ useEffect(() => {
+     fetch(`https://api.storyblok.com/oauth/user_info`,{
+         headers:{
+             'Authorization': `Bearer ${props.accessToken}`
+         }
+     })
+         .then((res) => res.json())
+         .then((userInfo) => setUserInfo(userInfo))
+         .catch((error) => {
+             console.error('Failed to fetch stories', error)
+             setUserInfo(undefined)
+         })
+ },[])
 
   return (
     <>
@@ -19,7 +40,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
-     <span>TBD</span>
+          {userInfo && (
+              <span>Hello {userInfo.user.friendly_name}</span>
+          )}
       </main>
     </>
   )
@@ -48,6 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
   const { accessToken, spaceId, userId } = appSession;
   return { props: { accessToken, spaceId, userId, isAdmin: isAdmin(appSession) } };
 };

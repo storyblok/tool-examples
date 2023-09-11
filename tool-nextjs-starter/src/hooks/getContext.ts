@@ -1,15 +1,25 @@
 import {APP_ORIGIN, TOOL_ID} from "@/hooks/useAutoHeight";
-import {useCallback, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 
+type Story = {
+    name:string,
+    updated_at:string,
+    content:unknown,
+    published:boolean
+    // partial type definition
+}
 
-//DRAFT
-export function useContext() {
-  const [context, setContext] = useState(undefined)
+type ToolContext = {
+    action: 'get-context',
+    language: string,
+    story:Story
+}
 
-   //usecallback?
-    const handleContext = ({data}:any) => {
+export function useToolContext() {
+  const [context, setContext] = useState<ToolContext|undefined>(undefined)
+    const handleContext = ({data}:MessageEvent<ToolContext>) => {
         if(data.action === 'get-context'){
-            setContext(data.story)
+            setContext(data)
         }
     }
 
@@ -22,6 +32,7 @@ export function useContext() {
             },
             APP_ORIGIN
         )
+
         window.addEventListener('message', handleContext)
 
         return () => {
@@ -29,6 +40,5 @@ export function useContext() {
         }
     },[])
 
-
-    return {context}
+    return context
 }

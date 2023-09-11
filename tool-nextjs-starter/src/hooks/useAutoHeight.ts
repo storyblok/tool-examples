@@ -26,7 +26,6 @@ export function useAutoHeight() {
         });
 
         return () => {
-            // cleanup function disconnect form the observer otherwise we would have multiple observers running?
             observer.disconnect();
         };
     }, []);
