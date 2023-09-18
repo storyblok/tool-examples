@@ -1,6 +1,6 @@
 import { authHandler, AuthHandlerParams, sessionCookieStore } from '@storyblok/app-extension-auth';
 
-['APP_CLIENT_ID', 'APP_CLIENT_SECRET', 'APP_URL'].forEach((key) => {
+['CLIENT_ID', 'CLIENT_SECRET', 'BASE_URL'].forEach((key) => {
     if (!process.env[key]) {
         throw new Error(`Environment variable "${key}" is missing.`);
     }
@@ -8,9 +8,9 @@ import { authHandler, AuthHandlerParams, sessionCookieStore } from '@storyblok/a
 export const cookieName = 'auth';
 
 export const authParams: AuthHandlerParams = {
-    clientId: process.env.APP_CLIENT_ID!,
-    clientSecret: process.env.APP_CLIENT_SECRET!,
-    baseUrl: process.env.APP_URL!,
+    clientId: process.env.CLIENT_ID!,
+    clientSecret: process.env.CLIENT_SECRET!,
+    baseUrl: process.env.BASE_URL!,
     cookieName,
     successCallback: '/',
     errorCallback: '/401',

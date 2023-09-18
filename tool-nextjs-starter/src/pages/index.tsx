@@ -14,6 +14,7 @@ type HomeProps = {
 }
 
 export default function Home(props: HomeProps) {
+    //TODO: add types
     const [userInfo, setUserInfo] = useState<any | undefined>(undefined)
     const toolContext = useToolContext();
 
@@ -67,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             redirect: {
                 permanent: false,
-                destination: process.env.APP_URL + '/api/connect/storyblok',
+                destination: process.env.BASE_URL + '/api/connect/storyblok',
             },
         };
     }
@@ -79,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             redirect: {
                 permanent: false,
-                destination: process.env.APP_URL + '/api/connect/storyblok',
+                destination: process.env.BASE_URL + '/api/connect/storyblok',
             },
         };
     }

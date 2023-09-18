@@ -1,5 +1,5 @@
-import {APP_ORIGIN, TOOL_ID} from "@/hooks/useAutoHeight";
 import {useEffect, useState} from "react";
+import {APP_ORIGIN, TOOL_ID} from "@/hooks/shared";
 
 type Story = {
     name: string,

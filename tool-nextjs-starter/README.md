@@ -1,38 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Storyblok Tool Starter x Next.js
+This is a starter template for Storyblok tools, created with Next.js (Pages Router) and [@storyblok/app-extension-auth](https://github.com/storyblok/app-extension-auth).
 
-## Getting Started
 
-First, run the development server:
+## How to run
+Install dependencies by running:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```shell
+yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set up a secure tunnel to proxy your request to/from `localhost:3000`, for example with [ngrok](https://ngrok.com/):
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```shell
+ngrok http 3000
+```
+Note down your assigned URL; this will be your `baseUrl` for the application.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Create new Storyblok Extension
+There are two ways on how you can create a tool inside
+Storyblok. Depending on your plan and use case, choose
+one of the following options: 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### Partner Portal
+1. Open [Storyblok's Partner Portal Extension View](https://app.storyblok.com/#/partner/apps)
+2. Click On **New Extension**
+3. Fill in the fields `name` and `slug`.
+4. Select `tool` as extension type
+5. Click on **Save**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### Organization
+1. Open [Storyblok's Organization Extension View](https://app.storyblok.com/#/me/org/apps)
+2. Click On **New Extension**
+3. Fill in the fields `name` and `slug`.
+4. Select `tool` as extension type
+5. Click on **Save**
 
-## Learn More
+### Tool Configuration 
+Once the tool has been created, a new entry will appear inside the extension list. Open it and navigate to the `OAuth 2.0 and Pages` tab.
 
-To learn more about Next.js, take a look at the following resources:
+Configure the following properties base on the previous steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Index to your page**: `{baseUrl}`
+* **Redirection endpoint**: `{baseUrl}/api/connect/callback`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### Configure Starter Environment Variables
+Rename the file `.env.local.example` to `.env.local`. Open the file and set the environmental variables:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* `CLIENT_ID`: the client id from the tool's settings page.
+* `CLIENT_SECRET`: the client secret from the tool's settings page.
+* `BASE_URL`: The `baseUrl` from your secure tunnel.
+* `NEXT_PUBLIC_TOOL_ID` the slug from the tool's settings page.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Start the application by running:
+
+```shell
+yarn dev
+```
+
+### Tool Installation
+Finally, install the application to your space: 
+
+1. Navigate to the tool's settings page.
+2. Open the **General Tab**.
+3. Open the **Install Link** in a new browser tab.
+4. Select a space, the Tool Plugin should be installed to.
+5. Open the selected space from Step 4.
+6. Navigate to a story of your choice.
+7. Open the tool tab by clicking ![tools icon](public/tools.svg)
+8. Approve the necessary access for the tool.
+
+The installation process is only done once per space. After the installation is finished, you will be able to navigate to the tool section inside any story and access the Tool Plugin.
+
+## Production
+When deploying your Tool Plugin, please remember to adjust the tool settings inside the Storyblok App to point to the correct  **Index to your page** and **Redirection endpoint**. 
+
+## Read More
+For more detailed information on Storyblok extensions,read the following guides:
+
+- [Tool Plugins](https://www.storyblok.com/docs/plugins/tool)
+- [OAuth 2.0 Authorization Flow](https://www.storyblok.com/docs/plugins/authentication-apps)
+

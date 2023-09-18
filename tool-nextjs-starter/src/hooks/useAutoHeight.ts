@@ -1,7 +1,6 @@
 import {useEffect} from "react";
+import {APP_ORIGIN, TOOL_ID} from "@/hooks/shared";
 
-export const TOOL_ID = process.env.NEXT_PUBLIC_DEVELOPMENT_TOOL_ID;
-export const APP_ORIGIN = 'https://app.storyblok.com';
 
 export function useAutoHeight() {
     useEffect(() => {
