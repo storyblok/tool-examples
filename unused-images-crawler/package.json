@@ -1,0 +1,21 @@
+{
+  "name": "unused-images",
+  "version": "1.0.1",
+  "description": "Tool to find unused images in your Storyblok space and store them in a folder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Zoppi",
+  "contributors": [
+    {
+      "name": "Alexandra Spalato",
+      "email": "alexa.spalato@storyblok.com"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "storyblok-js-client": "^6.2.0"
+  }
+}
