@@ -1,0 +1,28 @@
+{
+  "name": "find-unused-assets",
+  "version": "0.1.1",
+  "description": "Get all assets from a Storyblok space and run individual requests for references of those assets in stories, then print out unused assets.",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "Christian Zoppi",
+  "contributors": [
+    {
+      "name": "Bogdan Selenginskiy",
+      "email": "bseleng@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "chalk": "^4.1.0",
+    "form-data": "^3.0.0",
+    "inquirer": "^7.3.3",
+    "storyblok-js-client": "^5.12.1"
+  }
+}
