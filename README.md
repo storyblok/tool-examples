@@ -25,8 +25,9 @@ Each example contains a `README.md` with an explanation about the tool.
 |:-------|:------:|
 | **[Clean Up Field Script ](https://github.com/storyblok/tool-examples/tree/main/clean-up-field)** <br/>  A tool to remove a specific field from all stories  |  [Alexander Feiglstorfer](https://github.com/onefriendaday) |
 | **[Clone Assets ](https://github.com/storyblok/tool-examples/tree/main/clone-assets)** <br/>  A tool to clone assets from a space to its clone  |  [Christian Zoppi](https://github.com/christianzoppi) |
+| **[Get Cloned Assets Diff ](https://github.com/storyblok/tool-examples/tree/main/get-cloned-assets-diff)** <br/>  A tool to find all unused assets in a space  |  [Bogdan Selenginskiy](https://github.com/bseleng) |
+| **[](https://github.com/storyblok/tool-examples/tree/main/private-assets-demo)** <br/> undefined | undefined |
 | **[Storyblok Assets Backup ](https://github.com/storyblok/tool-examples/tree/main/storyblok-assets-backup)** <br/>  Tool for differential backups of the assets of any Storyblok space  |  [Christian Zoppi](https://github.com/christianzoppi), [Gerrit Plehn](https://github.com/GerritPlehn)  |
-| **[Private assets demo ](https://github.com/storyblok/tool-examples/tree/main/private-assets-demo)** <br/>  A demo to showcase how to use private assets as gated content  |  [Edoardo Sandon](https://github.com/edo-san)  |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
