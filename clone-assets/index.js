@@ -9,17 +9,17 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'source_space_id',
+    name: 'sourceSpaceId',
     message: "Please enter the Source Space Id",
   },
   {
     type: 'input',
-    name: 'target_space_id',
+    name: 'targetSpaceId',
     message: "Please enter the Target Space Id",
   },
   {
     type: 'input',
-    name: 'simultaneous_uploads',
+    name: 'simultaneousUploads',
     message: "Simultaneous Uploads",
     default: 20
   },
@@ -32,6 +32,6 @@ const questions = [
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  const migration = new Migration(answers.oauth, answers.source_space_id, answers.target_space_id, answers.simultaneous_uploads, answers.region)
+  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region)
   migration.start()
 })

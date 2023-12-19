@@ -109,12 +109,12 @@ export default class Migration {
   async getStories() {
     this.stepMessage("1", `Fetching stories from target space.`);
     try {
-      const stories_page_request = await this.cdnApiClient.get("cdn/stories", {
+      const storiesPageRequest = await this.cdnApiClient.get("cdn/stories", {
         version: "draft",
         per_page: 100,
         page: 1,
       });
-      const pages_total = Math.ceil(stories_page_request.headers.total / 100);
+      const pages_total = Math.ceil(storiesPageRequest.headers.total / 100);
       const storiesRequests = [];
       const storiesManagementRequests = [];
       for (let i = 1; i <= pages_total; i++) {
@@ -137,12 +137,12 @@ export default class Migration {
       const storiesResponsesManagement = await Promise.all(
         storiesManagementRequests
       );
-      this.stories_list = storiesResponses.map((r) => r.data.stories).flat();
-      let stories_list_management = storiesResponsesManagement
+      this.storiesList = storiesResponses.map((r) => r.data.stories).flat();
+      let storiesList_management = storiesResponsesManagement
         .map((r) => r.data.stories)
         .flat();
-      this.stories_list.forEach((story) => {
-        let story_management = stories_list_management.find(
+      this.storiesList.forEach((story) => {
+        let story_management = storiesList_management.find(
           (s) => s.uuid === story.uuid
         );
         if (story_management) {
@@ -170,10 +170,10 @@ export default class Migration {
       );
       this.assetsFolders = assetsFoldersRequest.data.asset_folders;
       this.assetsFolders.sort((a, b) => {
-        if ((a.parent_id === 0 && b.parent_id !== 0) || b.parent_id === a.id) {
+        if ((!a.parent_id && b.parent_id) || b.parent_id === a.id) {
           return -1;
         }
-        if ((a.parent_id !== 0 && b.parent_id === 0) || a.parent_id === b.id) {
+        if ((a.parent_id && !b.parent_id) || a.parent_id === b.id) {
           return 1;
         }
         return 0;
@@ -423,7 +423,7 @@ export default class Migration {
    */
   replaceAssetsInStories() {
     this.stepMessage("6", ``, `0 of ${this.assets.length} URLs replaced`);
-    this.updatedStories = this.stories_list.slice(0);
+    this.updatedStories = this.storiesList.slice(0);
     this.assets.forEach((asset, index) => {
       const assetUrlReg = new RegExp(
         asset.originalUrl.replace("https:", "").replace("http:", ""),
@@ -454,7 +454,7 @@ export default class Migration {
   async saveStories() {
     let total = 0;
     const storiesWithUpdates = this.updatedStories.filter((story) => {
-      const originalStory = this.stories_list.find((s) => s.id === story.id);
+      const originalStory = this.storiesList.find((s) => s.id === story.id);
       return (
         JSON.stringify(originalStory.content) !== JSON.stringify(story.content)
       );

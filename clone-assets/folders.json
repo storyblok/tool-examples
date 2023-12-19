@@ -1,0 +1,891 @@
+[
+ {
+  "id": 292756,
+  "name": "01 Product Screens",
+  "parent_id": 0,
+  "uuid": "e12b6f14-fb78-4aae-8b72-f2452c21284c",
+  "parent_uuid": null
+ },
+ {
+  "id": 264815,
+  "name": "02 screens-v2 - draft",
+  "parent_id": 0,
+  "uuid": "f763354f-a974-41be-be73-a9509f5ec5f3",
+  "parent_uuid": null
+ },
+ {
+  "id": 334979,
+  "name": "03 Brand Guidelines",
+  "parent_id": 0,
+  "uuid": "c4fdfb86-65f3-4733-ad92-9b1213db70f4",
+  "parent_uuid": null
+ },
+ {
+  "id": 198836,
+  "name": "About us",
+  "parent_id": null,
+  "uuid": "da92c4e9-8d22-4f93-a7dc-96c5eab9197e",
+  "parent_uuid": null
+ },
+ {
+  "id": 142097,
+  "name": "All Customers logos",
+  "parent_id": null,
+  "uuid": "660d6c84-6bb1-45c0-ac9a-03650d899447",
+  "parent_uuid": null
+ },
+ {
+  "id": 215100,
+  "name": "Ambassadors",
+  "parent_id": 0,
+  "uuid": "a2d831ef-c44b-410b-9e74-052929aa27b2",
+  "parent_uuid": null
+ },
+ {
+  "id": 97380,
+  "name": "app-images",
+  "parent_id": null,
+  "uuid": "075b9fe2-e2e0-478f-9728-aa4fc45f7f5f",
+  "parent_uuid": null
+ },
+ {
+  "id": 69028,
+  "name": "blog-partners-og",
+  "parent_id": null,
+  "uuid": "967ee92c-90c8-4bae-8d13-1717654c69d9",
+  "parent_uuid": null
+ },
+ {
+  "id": 62844,
+  "name": "blog-thumbnails",
+  "parent_id": null,
+  "uuid": "7c55465f-c791-4f53-98f3-e613da36c0a2",
+  "parent_uuid": null
+ },
+ {
+  "id": 136078,
+  "name": "changelog-screenshots",
+  "parent_id": null,
+  "uuid": "c23ec3c1-b9f3-433d-8853-2152615ffb3c",
+  "parent_uuid": null
+ },
+ {
+  "id": 43487,
+  "name": "cheat-sheet",
+  "parent_id": null,
+  "uuid": "c66655ae-baf6-4d10-9875-e32165cd61a6",
+  "parent_uuid": null
+ },
+ {
+  "id": 107139,
+  "name": "cloudflare dev guide",
+  "parent_id": null,
+  "uuid": "491e3b2b-5a14-49bc-b9e9-4b67a2e23a05",
+  "parent_uuid": null
+ },
+ {
+  "id": 200206,
+  "name": "comparison-pages",
+  "parent_id": null,
+  "uuid": "6ef01645-0e24-43bc-9a77-426882661103",
+  "parent_uuid": null
+ },
+ {
+  "id": 48014,
+  "name": "content-icons",
+  "parent_id": null,
+  "uuid": "588a3d73-295f-405c-b87c-f955c188f09a",
+  "parent_uuid": null
+ },
+ {
+  "id": 38980,
+  "name": "Customer Logos",
+  "parent_id": null,
+  "uuid": "96540031-2367-4c5d-8cc5-9f27f4b6d235",
+  "parent_uuid": null
+ },
+ {
+  "id": 238052,
+  "name": "docs",
+  "parent_id": 0,
+  "uuid": "9c91d8af-43e3-4d50-bcfa-c004da7d4b16",
+  "parent_uuid": null
+ },
+ {
+  "id": 38534,
+  "name": "docs-guides",
+  "parent_id": null,
+  "uuid": "062eca7c-289b-4e8c-b93d-d53923b80244",
+  "parent_uuid": null
+ },
+ {
+  "id": 159357,
+  "name": "DX",
+  "parent_id": null,
+  "uuid": "bb7c560a-a23b-4781-8598-323b5adec5c9",
+  "parent_uuid": null
+ },
+ {
+  "id": 40936,
+  "name": "email",
+  "parent_id": null,
+  "uuid": "59facda4-66d4-4d42-a51c-2e842c152969",
+  "parent_uuid": null
+ },
+ {
+  "id": 100701,
+  "name": "email-signature",
+  "parent_id": null,
+  "uuid": "88fcfbd3-4f5c-43bd-94d9-aedef051a8f7",
+  "parent_uuid": null
+ },
+ {
+  "id": 118958,
+  "name": "enterprise-use-cases",
+  "parent_id": null,
+  "uuid": "84e1b7a5-c436-4c7e-97d1-9b0674843beb",
+  "parent_uuid": null
+ },
+ {
+  "id": 313285,
+  "name": "event LP assets",
+  "parent_id": 0,
+  "uuid": "e52e7f08-375f-4ced-967c-d13685643ccb",
+  "parent_uuid": null
+ },
+ {
+  "id": 50245,
+  "name": "event-speakers",
+  "parent_id": null,
+  "uuid": "97498e61-7537-4ff8-91fd-cad9670c489b",
+  "parent_uuid": null
+ },
+ {
+  "id": 189940,
+  "name": "faq-partner",
+  "parent_id": null,
+  "uuid": "a475ff96-ed86-4fe5-9165-e7e44c52ddaf",
+  "parent_uuid": null
+ },
+ {
+  "id": 177026,
+  "name": "faqs",
+  "parent_id": null,
+  "uuid": "88e0e240-0c75-4e12-83a4-4a082c3fcc32",
+  "parent_uuid": null
+ },
+ {
+  "id": 234659,
+  "name": "Favicons",
+  "parent_id": 0,
+  "uuid": "578f00ef-8c11-4347-bc4e-7e5ae5a570fe",
+  "parent_uuid": null
+ },
+ {
+  "id": 234732,
+  "name": "Gartner Assets",
+  "parent_id": 0,
+  "uuid": "b9b35b81-9983-419f-8976-67b01adb15cc",
+  "parent_uuid": null
+ },
+ {
+  "id": 328753,
+  "name": "getting-started",
+  "parent_id": 0,
+  "uuid": "718be38c-ca4c-4dc3-a6b6-432df7c06bb4",
+  "parent_uuid": null
+ },
+ {
+  "id": 262131,
+  "name": "icons",
+  "parent_id": 0,
+  "uuid": "de9f1a0f-e922-40c0-a589-37ca8761efea",
+  "parent_uuid": null
+ },
+ {
+  "id": 51651,
+  "name": "integrations",
+  "parent_id": null,
+  "uuid": "f5d54e19-fa68-4e00-8e34-f9089634e1a7",
+  "parent_uuid": null
+ },
+ {
+  "id": 45989,
+  "name": "lp-ecommerce",
+  "parent_id": null,
+  "uuid": "5f142d34-0feb-4240-8e7a-cc8eccf05f3b",
+  "parent_uuid": null
+ },
+ {
+  "id": 165013,
+  "name": "lp-industries",
+  "parent_id": null,
+  "uuid": "29c061f6-3d7b-4037-a0df-002069a99250",
+  "parent_uuid": null
+ },
+ {
+  "id": 291875,
+  "name": "marketing events",
+  "parent_id": 0,
+  "uuid": "1d112e7f-13cb-49ad-95e1-4f58ea29456b",
+  "parent_uuid": null
+ },
+ {
+  "id": 114191,
+  "name": "Multispace dev guide",
+  "parent_id": null,
+  "uuid": "c935d7e3-97c3-472d-986b-dec86771eac6",
+  "parent_uuid": null
+ },
+ {
+  "id": 259958,
+  "name": "nav v2 icons",
+  "parent_id": 0,
+  "uuid": "fe038716-b7d6-40f2-a938-11f04e154f24",
+  "parent_uuid": null
+ },
+ {
+  "id": 234763,
+  "name": "new-hp",
+  "parent_id": 0,
+  "uuid": "cc471d67-dd09-4fab-9c1e-e395dd7bdd3a",
+  "parent_uuid": null
+ },
+ {
+  "id": 85366,
+  "name": "new-icons",
+  "parent_id": null,
+  "uuid": "590188ce-1d8c-47ea-bbef-ee745565c3b0",
+  "parent_uuid": null
+ },
+ {
+  "id": 50510,
+  "name": "newsletter",
+  "parent_id": null,
+  "uuid": "73cf9a9a-6037-48d2-914f-9b456ce1adb7",
+  "parent_uuid": null
+ },
+ {
+  "id": 176585,
+  "name": "og-editor-guides",
+  "parent_id": null,
+  "uuid": "3765b750-38ec-470f-9435-639a941a086e",
+  "parent_uuid": null
+ },
+ {
+  "id": 127948,
+  "name": "og-images",
+  "parent_id": null,
+  "uuid": "81e52819-cfd1-44ba-99ed-036f00e13853",
+  "parent_uuid": null
+ },
+ {
+  "id": 48015,
+  "name": "old-nav-icons-not-in-use",
+  "parent_id": null,
+  "uuid": "f0faeece-3749-4cdb-8bf7-5880d7077b38",
+  "parent_uuid": null
+ },
+ {
+  "id": 69354,
+  "name": "Open Source Repos",
+  "parent_id": null,
+  "uuid": "0452cb6d-ebda-41af-abce-3523e9bfa241",
+  "parent_uuid": null
+ },
+ {
+  "id": 59807,
+  "name": "partner",
+  "parent_id": null,
+  "uuid": "cf79a3a0-39e1-4343-9184-404019124677",
+  "parent_uuid": null
+ },
+ {
+  "id": 304655,
+  "name": "Partner Portal Access",
+  "parent_id": 0,
+  "uuid": "521e6a5f-ede2-4103-a62f-5f292a1dbb96",
+  "parent_uuid": null
+ },
+ {
+  "id": 284830,
+  "name": "Press Brand Guidelines",
+  "parent_id": 0,
+  "uuid": "1fd558a4-38c0-47e0-9af1-efcaedf850fd",
+  "parent_uuid": null
+ },
+ {
+  "id": 227703,
+  "name": "quickstart",
+  "parent_id": 0,
+  "uuid": "bb366bfe-e072-44e1-b52e-39eb13aadcda",
+  "parent_uuid": null
+ },
+ {
+  "id": 113708,
+  "name": "React apollo graphql devguide",
+  "parent_id": null,
+  "uuid": "57ffcd75-cb13-4765-b36d-6dd54c210c85",
+  "parent_uuid": null
+ },
+ {
+  "id": 120542,
+  "name": "Release Update 11",
+  "parent_id": null,
+  "uuid": "f0636c1d-e4a3-46ff-8c01-94cde78a9e50",
+  "parent_uuid": null
+ },
+ {
+  "id": 62856,
+  "name": "reviews",
+  "parent_id": null,
+  "uuid": "03afaea1-37a7-4dd5-8741-5a97e894490f",
+  "parent_uuid": null
+ },
+ {
+  "id": 222931,
+  "name": "SDKs",
+  "parent_id": 0,
+  "uuid": "8d59bca1-4762-46ed-9c1e-08836b417b69",
+  "parent_uuid": null
+ },
+ {
+  "id": 177100,
+  "name": "social-media-icons",
+  "parent_id": null,
+  "uuid": "d83d3d37-1a28-482b-9552-3b507c7125c2",
+  "parent_uuid": null
+ },
+ {
+  "id": 282230,
+  "name": "Storyblok Newsletter",
+  "parent_id": 0,
+  "uuid": "8e8d02a6-fc9e-4cf8-8902-0bc9bb907ae6",
+  "parent_uuid": null
+ },
+ {
+  "id": 234605,
+  "name": "Storyblok-teal Icons",
+  "parent_id": 0,
+  "uuid": "93a8b836-e609-44b7-b0a2-2045d8770c19",
+  "parent_uuid": null
+ },
+ {
+  "id": 45811,
+  "name": "tc-icons",
+  "parent_id": null,
+  "uuid": "0c374d80-33c2-45f3-913d-d0f7e345991d",
+  "parent_uuid": null
+ },
+ {
+  "id": 109696,
+  "name": "team",
+  "parent_id": null,
+  "uuid": "209d8941-b515-4c9a-9ad0-47c52724aa67",
+  "parent_uuid": null
+ },
+ {
+  "id": 231557,
+  "name": "Tech Hubs",
+  "parent_id": 0,
+  "uuid": "748bc0de-ee89-499a-93cf-65d5c0c0d25f",
+  "parent_uuid": "0c374d80-33c2-45f3-913d-d0f7e345991d"
+ },
+ {
+  "id": 183670,
+  "name": "Technology Partner Logos",
+  "parent_id": null,
+  "uuid": "70aa8a32-ca12-4437-80b6-91c7de00c318",
+  "parent_uuid": null
+ },
+ {
+  "id": 87006,
+  "name": "testing",
+  "parent_id": null,
+  "uuid": "c763d16c-6b4a-4f41-af31-3f3b5a9307bc",
+  "parent_uuid": null
+ },
+ {
+  "id": 136096,
+  "name": "trust",
+  "parent_id": null,
+  "uuid": "2c7a2a99-bc4e-4324-ae29-bd3bdf1ce8d4",
+  "parent_uuid": null
+ },
+ {
+  "id": 198967,
+  "name": "ultimate-tutorial",
+  "parent_id": null,
+  "uuid": "57cc0178-7ee5-47c4-9e39-cf2580222b8d",
+  "parent_uuid": null
+ },
+ {
+  "id": 201962,
+  "name": "Virtual Job Fair assets",
+  "parent_id": null,
+  "uuid": "979e3e51-b512-4b17-8230-edaa91303133",
+  "parent_uuid": null
+ },
+ {
+  "id": 47760,
+  "name": "whitepaper",
+  "parent_id": null,
+  "uuid": "5d2df386-63af-4b1e-be5e-886cb23c6ba8",
+  "parent_uuid": null
+ },
+ {
+  "id": 305498,
+  "name": "1",
+  "parent_id": 282230,
+  "uuid": "f31890d5-769f-40a5-b2bc-0c8ec4e849ca",
+  "parent_uuid": "8e8d02a6-fc9e-4cf8-8902-0bc9bb907ae6"
+ },
+ {
+  "id": 305499,
+  "name": "2",
+  "parent_id": 282230,
+  "uuid": "fe69e0da-701e-45bc-a7d5-34baa13b2188",
+  "parent_uuid": "8e8d02a6-fc9e-4cf8-8902-0bc9bb907ae6"
+ },
+ {
+  "id": 341342,
+  "name": "3",
+  "parent_id": 282230,
+  "uuid": "69446a7c-4f2b-46ab-87dd-e4a092bbfacc",
+  "parent_uuid": "8e8d02a6-fc9e-4cf8-8902-0bc9bb907ae6"
+ },
+ {
+  "id": 170018,
+  "name": "5min-laravel",
+  "parent_id": 38534,
+  "uuid": "a268fa80-d7cf-44a0-8f11-99572219699c",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 99242,
+  "name": "ab-test-optimizely",
+  "parent_id": 38534,
+  "uuid": "07e19041-8dce-425d-9353-070f7b77e658",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 165324,
+  "name": "angular",
+  "parent_id": 38534,
+  "uuid": "eb5be1ac-9c59-4e20-b266-6d8585066cd6",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 224356,
+  "name": "astro",
+  "parent_id": 198967,
+  "uuid": "d5ac2243-0b72-4bf4-8f60-64946fcf2381",
+  "parent_uuid": "57cc0178-7ee5-47c4-9e39-cf2580222b8d"
+ },
+ {
+  "id": 200199,
+  "name": "badges",
+  "parent_id": 62856,
+  "uuid": "15cb4003-1ec4-49fe-991f-ba1555ea1e7e",
+  "parent_uuid": "03afaea1-37a7-4dd5-8741-5a97e894490f"
+ },
+ {
+  "id": 234764,
+  "name": "case-studies",
+  "parent_id": 234763,
+  "uuid": "1f17d831-a811-4441-af8d-ae6b22255888",
+  "parent_uuid": "cc471d67-dd09-4fab-9c1e-e395dd7bdd3a"
+ },
+ {
+  "id": 52606,
+  "name": "home_main_card",
+  "parent_id": 50390,
+  "uuid": "c457a80d-7d4e-46cf-8950-b3628c7d56cf",
+  "parent_uuid": "c8de544a-21ed-41de-bea9-46fa959a0925"
+ },
+ {
+  "id": 50390,
+  "name": "components",
+  "parent_id": 52606,
+  "uuid": "c8de544a-21ed-41de-bea9-46fa959a0925",
+  "parent_uuid": "c457a80d-7d4e-46cf-8950-b3628c7d56cf"
+ },
+ {
+  "id": 40038,
+  "name": "content-auth",
+  "parent_id": 38534,
+  "uuid": "2b711457-cf2d-4aff-88e4-6b2158d062c8",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 177229,
+  "name": "content-structure",
+  "parent_id": 38534,
+  "uuid": "27595011-51c8-450d-b0bb-4adea8b0ddeb",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 248934,
+  "name": "continous-delivery",
+  "parent_id": 238069,
+  "uuid": "720db4e1-d060-49df-a32b-f429e7c7cae5",
+  "parent_uuid": "91e8f9e7-56c9-480e-86c1-ff6c325139d7"
+ },
+ {
+  "id": 59657,
+  "name": "covers",
+  "parent_id": 59534,
+  "uuid": "0b418531-0a9b-4d4d-a94e-fde3f21fe930",
+  "parent_uuid": "2c6ab194-8a6a-46ee-87ca-d445988272b7"
+ },
+ {
+  "id": 238443,
+  "name": "create",
+  "parent_id": 238069,
+  "uuid": "22080828-0846-4e24-9e10-7766b9d11841",
+  "parent_uuid": "91e8f9e7-56c9-480e-86c1-ff6c325139d7"
+ },
+ {
+  "id": 292143,
+  "name": "custom-application",
+  "parent_id": 289537,
+  "uuid": "5ff77f82-f22d-4816-8e15-cec4b232ef69",
+  "parent_uuid": "00d47262-87a4-4a34-9f7b-f0e725acf515"
+ },
+ {
+  "id": 238069,
+  "name": "field-plugins",
+  "parent_id": 238052,
+  "uuid": "91e8f9e7-56c9-480e-86c1-ff6c325139d7",
+  "parent_uuid": "9c91d8af-43e3-4d50-bcfa-c004da7d4b16"
+ },
+ {
+  "id": 245738,
+  "name": "deploy",
+  "parent_id": 238069,
+  "uuid": "c252306d-4c03-487a-bb4d-abe90383e36e",
+  "parent_uuid": "91e8f9e7-56c9-480e-86c1-ff6c325139d7"
+ },
+ {
+  "id": 245747,
+  "name": "distribute",
+  "parent_id": 238069,
+  "uuid": "0134c423-0c96-4eab-bb9f-64e1d2d3521f",
+  "parent_uuid": "91e8f9e7-56c9-480e-86c1-ff6c325139d7"
+ },
+ {
+  "id": 47757,
+  "name": "gc",
+  "parent_id": 40936,
+  "uuid": "e743c5eb-d2b7-49c9-ad30-34b6efadfa14",
+  "parent_uuid": "59facda4-66d4-4d42-a51c-2e842c152969"
+ },
+ {
+  "id": 291076,
+  "name": "getting-started",
+  "parent_id": 289537,
+  "uuid": "f967b6e6-910d-42ba-b403-96fd067c0521",
+  "parent_uuid": "00d47262-87a4-4a34-9f7b-f0e725acf515"
+ },
+ {
+  "id": 177027,
+  "name": "how to crop in v2",
+  "parent_id": 177026,
+  "uuid": "85e2a15d-5ff3-469f-9972-be8a78cb769b",
+  "parent_uuid": "88e0e240-0c75-4e12-83a4-4a082c3fcc32"
+ },
+ {
+  "id": 40034,
+  "name": "i18n",
+  "parent_id": 38534,
+  "uuid": "e1e7c7ff-faf3-4102-9693-daf227cc7a78",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 46120,
+  "name": "icons",
+  "parent_id": 45989,
+  "uuid": "d0182ba0-f3cf-4d88-851b-fc036001e989",
+  "parent_uuid": "5f142d34-0feb-4240-8e7a-cc8eccf05f3b"
+ },
+ {
+  "id": 50391,
+  "name": "in_content_newsletter",
+  "parent_id": 50390,
+  "uuid": "0d39972f-eb5f-40c6-a44d-89e6dcc7ff06",
+  "parent_uuid": "c8de544a-21ed-41de-bea9-46fa959a0925"
+ },
+ {
+  "id": 60124,
+  "name": "integration-sb-lokalise",
+  "parent_id": 38534,
+  "uuid": "f7d57908-f0b2-4b5c-8f43-7b03d9c1408e",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 238072,
+  "name": "introduction",
+  "parent_id": 238069,
+  "uuid": "91c8b021-7aa3-40d2-9a5a-7e4784c122ed",
+  "parent_uuid": "91e8f9e7-56c9-480e-86c1-ff6c325139d7"
+ },
+ {
+  "id": 289538,
+  "name": "introduction",
+  "parent_id": 289537,
+  "uuid": "1e4c0dfc-4bae-4bf4-9166-2aa5ac5bf0f6",
+  "parent_uuid": "00d47262-87a4-4a34-9f7b-f0e725acf515"
+ },
+ {
+  "id": 265873,
+  "name": "link-object",
+  "parent_id": 38534,
+  "uuid": "522cbcbc-7c3d-4122-b491-b39644a9370c",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 46136,
+  "name": "logos",
+  "parent_id": 45989,
+  "uuid": "4eac767e-ff2c-4994-8664-6a6bedf5b3cd",
+  "parent_uuid": "5f142d34-0feb-4240-8e7a-cc8eccf05f3b"
+ },
+ {
+  "id": 166135,
+  "name": "management-api",
+  "parent_id": 38534,
+  "uuid": "74d64b2d-e4e9-4bbd-8027-39d50d0764ad",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 59534,
+  "name": "marketing atlas",
+  "parent_id": 47760,
+  "uuid": "2c6ab194-8a6a-46ee-87ca-d445988272b7",
+  "parent_uuid": "5d2df386-63af-4b1e-be5e-886cb23c6ba8"
+ },
+ {
+  "id": 274953,
+  "name": "migrating-to-vue3",
+  "parent_id": 238069,
+  "uuid": "18945aa6-886a-47fb-af38-4e42c1f0750b",
+  "parent_uuid": "91e8f9e7-56c9-480e-86c1-ff6c325139d7"
+ },
+ {
+  "id": 60805,
+  "name": "new-style",
+  "parent_id": 45989,
+  "uuid": "2d85296a-9e6c-45e2-a7dd-3a006c401a4f",
+  "parent_uuid": "5f142d34-0feb-4240-8e7a-cc8eccf05f3b"
+ },
+ {
+  "id": 291872,
+  "name": "OAuth 2.0 API",
+  "parent_id": 289537,
+  "uuid": "ef54ab04-8378-44c9-90c7-958679309b7c",
+  "parent_uuid": "00d47262-87a4-4a34-9f7b-f0e725acf515"
+ },
+ {
+  "id": 48070,
+  "name": "og-images",
+  "parent_id": 45989,
+  "uuid": "bdeb64d1-913c-42c9-8b91-067b8509d313",
+  "parent_uuid": "5f142d34-0feb-4240-8e7a-cc8eccf05f3b"
+ },
+ {
+  "id": 231419,
+  "name": "og-images",
+  "parent_id": 224356,
+  "uuid": "d5eaf254-a839-48dd-9e47-dc0220a94c45",
+  "parent_uuid": "d5ac2243-0b72-4bf4-8f60-64946fcf2381"
+ },
+ {
+  "id": 59662,
+  "name": "og-images",
+  "parent_id": 59534,
+  "uuid": "227381e8-dab5-4b5f-a6e3-3a7b1cbc2780",
+  "parent_uuid": "2c6ab194-8a6a-46ee-87ca-d445988272b7"
+ },
+ {
+  "id": 201074,
+  "name": "shared-content",
+  "parent_id": 198967,
+  "uuid": "4327bd19-dbf3-4223-acb9-bce1569e12c4",
+  "parent_uuid": "57cc0178-7ee5-47c4-9e39-cf2580222b8d"
+ },
+ {
+  "id": 201075,
+  "name": "part-1",
+  "parent_id": 201074,
+  "uuid": "71a78692-6ab3-47be-8d01-0d28334dc5a4",
+  "parent_uuid": "4327bd19-dbf3-4223-acb9-bce1569e12c4"
+ },
+ {
+  "id": 201500,
+  "name": "part-2",
+  "parent_id": 201074,
+  "uuid": "af22ecc9-4436-4d48-a6c5-21898bf9197c",
+  "parent_uuid": "4327bd19-dbf3-4223-acb9-bce1569e12c4"
+ },
+ {
+  "id": 60054,
+  "name": "partner-case-studies",
+  "parent_id": 59807,
+  "uuid": "ea0436fe-1401-4744-8aa1-a7a076a56df9",
+  "parent_uuid": "cf79a3a0-39e1-4343-9184-404019124677"
+ },
+ {
+  "id": 59808,
+  "name": "partner-listing-logos",
+  "parent_id": 59807,
+  "uuid": "9790f6c1-1f74-49a1-91f4-a289adc43cbf",
+  "parent_uuid": "cf79a3a0-39e1-4343-9184-404019124677"
+ },
+ {
+  "id": 289537,
+  "name": "plugins",
+  "parent_id": 238052,
+  "uuid": "00d47262-87a4-4a34-9f7b-f0e725acf515",
+  "parent_uuid": "9c91d8af-43e3-4d50-bcfa-c004da7d4b16"
+ },
+ {
+  "id": 52522,
+  "name": "previews",
+  "parent_id": 50390,
+  "uuid": "e116674c-4149-46d7-a742-d6ac39a29edc",
+  "parent_uuid": "c8de544a-21ed-41de-bea9-46fa959a0925"
+ },
+ {
+  "id": 198873,
+  "name": "resolve-relations",
+  "parent_id": 38534,
+  "uuid": "bf6a7c14-5b6a-4b26-9b58-2aad0fadac8a",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 168837,
+  "name": "s3backup",
+  "parent_id": 38534,
+  "uuid": "f68f372b-e62f-4b5d-9db1-9d47e67b2566",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 166600,
+  "name": "seo",
+  "parent_id": 38534,
+  "uuid": "b08accf7-65bc-4945-b62a-f0917a5c3cfc",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 182383,
+  "name": "spryker",
+  "parent_id": 51651,
+  "uuid": "23d56c45-6fd4-4d27-87e1-0be4b00aa9c9",
+  "parent_uuid": "f5d54e19-fa68-4e00-8e34-f9089634e1a7"
+ },
+ {
+  "id": 52713,
+  "name": "tech_logos",
+  "parent_id": 50390,
+  "uuid": "7ccf7fc1-80f0-46d1-a090-daa9257d6e50",
+  "parent_uuid": "c8de544a-21ed-41de-bea9-46fa959a0925"
+ },
+ {
+  "id": 59656,
+  "name": "thumbnails",
+  "parent_id": 59534,
+  "uuid": "9a76d8e3-bc61-4a65-ab8e-5148063bd7dc",
+  "parent_uuid": "2c6ab194-8a6a-46ee-87ca-d445988272b7"
+ },
+ {
+  "id": 291391,
+  "name": "tools",
+  "parent_id": 289537,
+  "uuid": "5cda895b-f41c-49ed-9aeb-bdd682240bc0",
+  "parent_uuid": "00d47262-87a4-4a34-9f7b-f0e725acf515"
+ },
+ {
+  "id": 136079,
+  "name": "update-13",
+  "parent_id": 136078,
+  "uuid": "8fd9b210-db28-4c94-bbf8-9e6bb9eab302",
+  "parent_uuid": "c23ec3c1-b9f3-433d-8853-2152615ffb3c"
+ },
+ {
+  "id": 136735,
+  "name": "update-14",
+  "parent_id": 136078,
+  "uuid": "16b984bd-df86-4972-8c09-282c3544514a",
+  "parent_uuid": "c23ec3c1-b9f3-433d-8853-2152615ffb3c"
+ },
+ {
+  "id": 140439,
+  "name": "update-15",
+  "parent_id": 136078,
+  "uuid": "37ddc8a0-22cc-4c92-b1ce-251f657b2c1f",
+  "parent_uuid": "c23ec3c1-b9f3-433d-8853-2152615ffb3c"
+ },
+ {
+  "id": 145303,
+  "name": "update-16",
+  "parent_id": 136078,
+  "uuid": "e7be5c4f-dbda-47f3-94c7-8ef061164d83",
+  "parent_uuid": "c23ec3c1-b9f3-433d-8853-2152615ffb3c"
+ },
+ {
+  "id": 160023,
+  "name": "update-17",
+  "parent_id": 136078,
+  "uuid": "75f886f8-1a9c-4a4d-8483-efa472911cfd",
+  "parent_uuid": "c23ec3c1-b9f3-433d-8853-2152615ffb3c"
+ },
+ {
+  "id": 181481,
+  "name": "ut2",
+  "parent_id": 170018,
+  "uuid": "d6081a80-409e-4fd1-b442-2df9f7f8e4c7",
+  "parent_uuid": "a268fa80-d7cf-44a0-8f11-99572219699c"
+ },
+ {
+  "id": 185903,
+  "name": "ut3",
+  "parent_id": 170018,
+  "uuid": "533e5914-0cb9-4723-a1e8-f6c68fd9bcd8",
+  "parent_uuid": "a268fa80-d7cf-44a0-8f11-99572219699c"
+ },
+ {
+  "id": 202755,
+  "name": "ut4",
+  "parent_id": 170018,
+  "uuid": "45a8d2c4-76e3-4eae-a68c-7542aaea5de5",
+  "parent_uuid": "a268fa80-d7cf-44a0-8f11-99572219699c"
+ },
+ {
+  "id": 198968,
+  "name": "ut-nuxt",
+  "parent_id": 198967,
+  "uuid": "9e0da9e2-e3a1-402c-9022-f5242e2c5afe",
+  "parent_uuid": "57cc0178-7ee5-47c4-9e39-cf2580222b8d"
+ },
+ {
+  "id": 204730,
+  "name": "v2-update-05",
+  "parent_id": 136078,
+  "uuid": "8c9b18a4-b012-4f91-a090-3a7bc4d24677",
+  "parent_uuid": "c23ec3c1-b9f3-433d-8853-2152615ffb3c"
+ },
+ {
+  "id": 64723,
+  "name": "webhooks",
+  "parent_id": 38534,
+  "uuid": "8cef8e28-c5ef-4c54-9215-50fc5a615a63",
+  "parent_uuid": "062eca7c-289b-4e8c-b93d-d53923b80244"
+ },
+ {
+  "id": 47759,
+  "name": "whitepaper",
+  "parent_id": 40936,
+  "uuid": "60d26254-9cd3-4cda-af02-7cf01c8daad5",
+  "parent_uuid": "59facda4-66d4-4d42-a51c-2e842c152969"
+ }
+]
