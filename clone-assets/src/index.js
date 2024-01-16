@@ -445,7 +445,6 @@ export default class Migration {
   replaceAssetsInStories() {
     this.stepMessage("6", ``, `0 of ${this.assets.length} URLs replaced`);
     this.updatedStories = this.storiesList.slice(0);
-    console.log(this.assets)
     this.assets.forEach((asset, index) => {
       this.updatedStories = this.replaceAssetInData(this.updatedStories, asset);
       this.stepMessage(
@@ -454,7 +453,6 @@ export default class Migration {
         `${index} of ${this.assets.length} URLs replaced`
       );
     });
-    console.log(JSON.stringify(this.updatedStories, 0, 1, 4))
     this.stepMessageEnd("6", `Replaced all URLs in the stories.`);
   }
 

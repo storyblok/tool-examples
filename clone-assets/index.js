@@ -26,13 +26,13 @@ const questions = [
   {
     type: 'input',
     name: 'region',
-    message: "Please enter the Region code for the source space. Leave empty for default UE region",
+    message: "Please enter the Region code for the source space. Leave empty for default EU region",
     default: null
   },
   {
     type: 'input',
     name: 'targetRegion',
-    message: "Please enter the Region code for the target space. Leave empty for default UE region",
+    message: "Please enter the Region code for the target space. Leave empty for default EU region",
     default: null
   },
 ]
