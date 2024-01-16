@@ -9,29 +9,35 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'source_space_id',
+    name: 'sourceSpaceId',
     message: "Please enter the Source Space Id",
   },
   {
     type: 'input',
-    name: 'target_space_id',
+    name: 'targetSpaceId',
     message: "Please enter the Target Space Id",
   },
   {
     type: 'input',
-    name: 'simultaneous_uploads',
+    name: 'simultaneousUploads',
     message: "Simultaneous Uploads",
     default: 20
   },
   {
     type: 'input',
     name: 'region',
-    message: "Please enter the Region code. Leave empty for default UE region",
+    message: "Please enter the Region code for the source space. Leave empty for default UE region",
+    default: null
+  },
+  {
+    type: 'input',
+    name: 'targetRegion',
+    message: "Please enter the Region code for the target space. Leave empty for default UE region",
     default: null
   },
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  const migration = new Migration(answers.oauth, answers.source_space_id, answers.target_space_id, answers.simultaneous_uploads, answers.region)
+  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion)
   migration.start()
 })
