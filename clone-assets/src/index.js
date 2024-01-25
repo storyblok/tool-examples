@@ -19,8 +19,8 @@ export default class Migration {
     this.targetSpaceId = targetSpaceId;
     this.oauth = oauth;
     this.simultaneousUploads = simultaneousUploads;
-    this.sourceRegion = sourceRegion;
-    this.targetRegion = targetRegion
+    this.sourceRegion = (sourceRegion || "eu").toLowerCase();
+    this.targetRegion = (targetRegion || "eu").toLowerCase();
     this.assetsFolders = [];
     this.assetsRetries = {};
     this.assetsFoldersMap = {};
