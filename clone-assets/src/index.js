@@ -176,15 +176,6 @@ export default class Migration {
         `spaces/${this.sourceSpaceId}/asset_folders`
       );
       this.assetsFolders = assetsFoldersRequest.data.asset_folders;
-      this.assetsFolders.sort((a, b) => {
-        if ((!a.parent_id && b.parent_id) || b.parent_id === a.id) {
-          return -1;
-        }
-        if ((a.parent_id && !b.parent_id) || a.parent_id === b.id) {
-          return 1;
-        }
-        return 0;
-      });
       this.stepMessageEnd("2", `Fetching assets folders from source space.`);
     } catch (err) {
       this.migrationError(
@@ -247,10 +238,7 @@ export default class Migration {
         const folderResponse = await this.targetMapiClient.post(
           `spaces/${this.targetSpaceId}/asset_folders`,
           {
-            name: currentFolder.name,
-            ...(currentFolder.parent_id && {
-              parent_id: currentFolder.parent_id,
-            }),
+            name: currentFolder.name
           }
         );
         this.assetsFoldersMap[currentFolder.id] =
@@ -263,6 +251,17 @@ export default class Migration {
               folder.updated = true;
             }
           });
+      }
+      const foldersWithParent = this.assetsFolders.filter(f => f.parent_id);
+      for (let index = 0; index < foldersWithParent.length; index++) {
+        const currentFolder = foldersWithParent[index];
+        const currentFolderId = this.assetsFoldersMap[currentFolder.id];
+        await this.targetMapiClient.put(
+          `spaces/${this.targetSpaceId}/asset_folders/${currentFolderId}`,
+          {
+            parent_id: currentFolder.parent_id
+          }
+        );
       }
       this.assetsList.forEach((asset) => {
         asset.asset_folder_id = this.assetsFoldersMap[asset.asset_folder_id];
