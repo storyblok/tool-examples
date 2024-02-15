@@ -116,47 +116,14 @@ export default class Migration {
   async getStories() {
     this.stepMessage("1", `Fetching stories from target space.`);
     try {
-      const storiesPageRequest = await this.cdnApiClient.get("cdn/stories", {
+      const links = await this.cdnApiClient.getAll("cdn/links", {
         version: "draft",
-        per_page: 100,
-        page: 1,
+        per_page: 25
       });
-      const pages_total = Math.ceil(storiesPageRequest.headers.total / 100);
-      const storiesRequests = [];
-      const storiesManagementRequests = [];
-      for (let i = 1; i <= pages_total; i++) {
-        storiesRequests.push(
-          this.cdnApiClient.get("cdn/stories", {
-            version: "draft",
-            per_page: 100,
-            page: i,
-          })
-        );
-        storiesManagementRequests.push(
-          this.targetMapiClient.get(`spaces/${this.targetSpaceId}/stories`, {
-            version: "draft",
-            per_page: 100,
-            page: i,
-          })
-        );
-      }
-      const storiesResponses = await Promise.all(storiesRequests);
       const storiesResponsesManagement = await Promise.all(
-        storiesManagementRequests
+        links.map(link => this.targetMapiClient.get(`spaces/${this.targetSpaceId}/stories/${link.id}`))
       );
-      this.storiesList = storiesResponses.map((r) => r.data.stories).flat();
-      let storiesList_management = storiesResponsesManagement
-        .map((r) => r.data.stories)
-        .flat();
-      this.storiesList.forEach((story) => {
-        let story_management = storiesList_management.find(
-          (s) => s.uuid === story.uuid
-        );
-        if (story_management) {
-          story.published = story_management.published;
-          story.unpublished_changes = story_management.unpublished_changes;
-        }
-      });
+      this.storiesList = storiesResponsesManagement.map((r) => r.data.story);
       this.stepMessageEnd("1", `Stories fetched from target space.`);
     } catch (err) {
       console.log(err);
@@ -434,6 +401,8 @@ export default class Migration {
       return {...data, id: asset.newId, filename: asset.newUrl}
     } else if(data && typeof data === "object") {
       return Object.keys(data).reduce((newObject, key) => {const propertyValue = this.replaceAssetInData(data[key], asset); newObject[key] = propertyValue; return newObject;}, {});
+    } else if(data && typeof data === "string" && data === asset.originalUrl.replace("https:", '')) {
+      return asset.newUrl.replace("https:", '');
     }
     return data;
   }
@@ -446,6 +415,7 @@ export default class Migration {
     this.updatedStories = this.storiesList.slice(0);
     this.assets.forEach((asset, index) => {
       this.updatedStories = this.replaceAssetInData(this.updatedStories, asset);
+      fs.writeFileSync("./log.json", JSON.stringify(this.updatedStories, 1, 4))
       this.stepMessage(
         "4",
         ``,
