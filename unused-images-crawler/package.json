@@ -4,7 +4,7 @@
   "description": "Tool to find unused images in your Storyblok space and store them in a folder",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index"
   },
   "author": "Christian Zoppi",
   "contributors": [
