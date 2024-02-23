@@ -3,8 +3,7 @@ require("dotenv").config();
 
 const oauthToken = process.env.OAUTH_TOKEN;
 const spaceId = parseInt(process.env.SPACE_ID);
-let folderToAssign = parseInt(process.env.FOLDER_TO_ASSIGN);
-
+let folderToAssign;
 // END: Configuration
 
 const StoryblokClient = require("storyblok-js-client");
