@@ -347,7 +347,7 @@ export default class Migration {
       const localAssetData = this.getLocalAssetData(assetUrl);
       let size = localAssetData.size;
       await this.downloadAsset(assetUrl);
-      if(this.detectImageSize && !size && ["jpg", "jpeg", "bmp", "png", "webp", "avif"].indexOf(localAssetData.ext) > -1) {
+      if(this.detectImageSize && !size && ["jpg", "jpeg", "gif", "png", "webp", "avif", "gif", "svg"].indexOf(localAssetData.ext) > -1) {
         const dimensions = sizeOf(localAssetData.filepath);
         size = `${dimensions.width}x${dimensions.height}`;
       }
