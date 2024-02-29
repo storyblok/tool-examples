@@ -4,6 +4,7 @@ import FormData from "form-data";
 import https from "https";
 import fs from "fs";
 import async from "async";
+import sizeOf from "image-size"
 
 // Throttling
 export default class Migration {
@@ -13,7 +14,9 @@ export default class Migration {
     targetSpaceId,
     simultaneousUploads,
     sourceRegion,
-    targetRegion
+    targetRegion,
+    clearSource,
+    detectImageSize
   ) {
     this.sourceSpaceId = sourceSpaceId;
     this.targetSpaceId = targetSpaceId;
@@ -25,6 +28,8 @@ export default class Migration {
     this.assetsRetries = {};
     this.assetsFoldersMap = {};
     this.retriesLimit = 4;
+    this.detectImageSize = detectImageSize === "yes";
+    this.clearSource = clearSource === "yes";
     this.mapiClient = new StoryblokClient({
       oauthToken: this.oauth,
       region: this.sourceRegion,
@@ -33,6 +38,7 @@ export default class Migration {
       oauthToken: this.oauth,
       region:  this.targetRegion,
     });
+    this.stepsTotal = this.clearSource ? 8 : 7;
   }
 
   /**
@@ -49,7 +55,7 @@ export default class Migration {
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     process.stdout.write(
-      `${chalk.white.bgBlue(` ${index}/7 `)} ${text} ${
+      `${chalk.white.bgBlue(` ${index}/${this.stepsTotal} `)} ${text} ${
         append_text ? chalk.black.bgYellow(` ${append_text} `) : ""
       }`
     );
@@ -59,9 +65,10 @@ export default class Migration {
    * Print a message of the completed step
    */
   stepMessageEnd(index, text) {
+    const stepsTotal = this.clearSource ? 8 : 7;
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    process.stdout.write(`${chalk.black.bgGreen(` ${index}/7 `)} ${text}\n`);
+    process.stdout.write(`${chalk.black.bgGreen(` ${index}/${this.stepsTotal} `)} ${text}\n`);
   }
 
   /**
@@ -79,6 +86,7 @@ export default class Migration {
       await this.uploadAssets();
       this.replaceAssetsInStories();
       await this.saveStories();
+      if (this.clearSource) await this.deleteAssetsInSource();
     } catch (err) {
       console.log(
         `${chalk.white.bgRed(` ⚠ Migration Error `)} ${chalk.red(
@@ -293,6 +301,7 @@ export default class Migration {
   getLocalAssetData(url) {
     const rootRegex = /\/\/a(-[a-z]+)?.storyblok.com\/f\//i
     const urlParts = url.replace(rootRegex, "").split("/");
+    const ext = url.split("?")[0].split("/").pop().split(".").pop().toLowerCase();
     const size = urlParts.length === 4 ? urlParts[1] : "";
 
     return {
@@ -302,7 +311,7 @@ export default class Migration {
         .split("?")[0]
         .split("/")
         .pop()}`,
-      ext: url.split("?")[0].split("/").pop().split(".").pop(),
+      ext,
       size,
     };
   }
@@ -336,8 +345,13 @@ export default class Migration {
   async uploadAsset(assetUrl, storyblokAssetData) {
     try {
       const localAssetData = this.getLocalAssetData(assetUrl);
+      let size = localAssetData.size;
       await this.downloadAsset(assetUrl);
-      let newAssetPayload = { ...storyblokAssetData, filename: assetUrl };
+      if(this.detectImageSize && !size && ["jpg", "jpeg", "bmp", "png", "webp", "avif"].indexOf(localAssetData.ext) > -1) {
+        const dimensions = sizeOf(localAssetData.filepath);
+        size = `${dimensions.width}x${dimensions.height}`;
+      }
+      let newAssetPayload = { ...storyblokAssetData, filename: assetUrl, size };
       const newAssetRequest = await this.targetMapiClient.post(
         `spaces/${this.targetSpaceId}/assets`,
         newAssetPayload
@@ -473,18 +487,23 @@ export default class Migration {
       })
     );
     process.stdout.clearLine();
-    this.stepMessageEnd("7", `Updated stories in target space.`);
-    console.log(
-      chalk.black.bgGreen(" ✓ Completed "),
-      `${
-        migrationResult.filter((r) => r.status === "fulfilled" && r.value)
-          .length
-      } ${
-        migrationResult.filter((r) => r.status === "fulfilled" && r.value)
-          .length === 1
-          ? "story"
-          : "stories"
-      } updated.`
-    );
+    this.stepMessageEnd("7", `Updated ${
+      migrationResult.filter((r) => r.status === "fulfilled" && r.value)
+        .length
+    } ${
+      migrationResult.filter((r) => r.status === "fulfilled" && r.value)
+        .length === 1
+        ? "story"
+        : "stories"
+    } in target space.`);
+  }
+
+  /**
+   * Delete assets in source
+   */
+  async deleteAssetsInSource() {
+    this.stepMessage("8", `Deleting assets from source space.`);
+    await Promise.allSettled(this.assetsList.map(asset => this.mapiClient.delete(`spaces/${this.targetSpaceId}/assets/${asset.id}`)));
+    this.stepMessageEnd("8", `Deleting assets from source space.`);
   }
 }
