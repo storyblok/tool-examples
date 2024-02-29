@@ -281,7 +281,7 @@ export default class Migration {
    */
   getLocalAssetData(url) {
     const urlParts = url.replace("https://a.storyblok.com/f/", "").split("/");
-    const dimensions = urlParts.length === 4 ? urlParts[1] : "";
+    const size = urlParts.length === 4 ? urlParts[1] : "";
 
     return {
       filename: url.split("?")[0].split("/").pop(),
@@ -291,7 +291,7 @@ export default class Migration {
         .split("/")
         .pop()}`,
       ext: url.split("?")[0].split("/").pop().split(".").pop(),
-      dimensions: dimensions,
+      size,
     };
   }
 
@@ -325,7 +325,7 @@ export default class Migration {
     try {
       const localAssetData = this.getLocalAssetData(assetUrl);
       await this.downloadAsset(assetUrl);
-      let newAssetPayload = { ...storyblokAssetData, filename: assetUrl };
+      let newAssetPayload = { ...storyblokAssetData, filename: assetUrl, size: localAssetData.size };
       const newAssetRequest = await this.targetMapiClient.post(
         `spaces/${this.targetSpaceId}/assets`,
         newAssetPayload
