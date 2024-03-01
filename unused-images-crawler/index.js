@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const oauthToken = process.env.PERSONAL_ACCESS_TOKEN;
 const spaceId = parseInt(process.env.SPACE_ID);
-let folderToAssign;
+let folderToAssign = parseInt(process.env.FOLDER_TO_ASSIGN);
 // END: Configuration
 
 const StoryblokClient = require("storyblok-js-client");
@@ -30,7 +30,7 @@ const Sync = {
       const folders = response.data.asset_folders;
 
       // Check if the folder with the desired name exists
-      const folder = folders.find((folder) => folder.name === "unused-assets");
+      const folder = folders.find((folder) => folder.id === folderToAssign);
 
       if (!folder) {
         console.log(`Folder 'unused-assets' does not exist. Creating it...`);
