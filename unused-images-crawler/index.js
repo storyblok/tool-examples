@@ -1,7 +1,7 @@
 require("dotenv").config();
 // BEGIN: Configuration
 
-const oauthToken = process.env.OAUTH_TOKEN;
+const oauthToken = process.env.PERSONAL_ACCESS_TOKEN;
 const spaceId = parseInt(process.env.SPACE_ID);
 let folderToAssign;
 // END: Configuration
