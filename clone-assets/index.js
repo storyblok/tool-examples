@@ -56,6 +56,6 @@ const questions = [
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion, answers.clearSource)
+  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion, answers.clearSource, answers.detectImageSize)
   migration.start()
 })
