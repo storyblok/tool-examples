@@ -269,7 +269,7 @@ export default class Migration {
           const assetUrl = this.getAssetFilename(asset.filename);
           const assetData = JSON.parse(JSON.stringify(asset));
           delete assetData.filename;
-          this.assets.push({ originalUrl: assetUrl, newUrl: assetUrl, originalId: assetData.id });
+          this.assets.push({ originalUrl: assetUrl, newUrl: `https:${assetUrl}`, originalId: assetData.id });
           delete assetData.id;
           await this.uploadAsset(assetUrl, assetData);
           this.stepMessage(
@@ -367,7 +367,7 @@ export default class Migration {
             let assetObject = this.assets.find(
               (item) => item && item.originalUrl == assetUrl
             );
-            assetObject.newUrl = signedRequest.pretty_url;
+            assetObject.newUrl = `https:${signedRequest.pretty_url}`;
             assetObject.newId = signedRequest.id;
 
             this.targetMapiClient
@@ -414,7 +414,7 @@ export default class Migration {
     } else if(data && typeof data === "object") {
       return Object.keys(data).reduce((newObject, key) => {const propertyValue = this.replaceAssetInData(data[key], asset); newObject[key] = propertyValue; return newObject;}, {});
     } else if(data && typeof data === "string" && this.getAssetFilename(data) === asset.originalUrl) {
-      return asset.newUrl.replace("https:", '');
+      return asset.newUrl;
     }
     return data;
   }
