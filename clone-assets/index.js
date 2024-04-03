@@ -43,12 +43,6 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'clearSource',
-    message: "Do you want to delete the assets from the source space? (yes/no)",
-    default: "no"
-  },
-  {
-    type: 'input',
     name: 'detectImageSize',
     message: "Detect the size of images without size in the URL? (yes/no)",
     default: "no"

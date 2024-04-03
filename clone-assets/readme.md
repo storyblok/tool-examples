@@ -18,5 +18,5 @@ Run `npm i` to install and then `npm run start`. There are the parameters you wi
 - Max simultaneous uploads (default is 20).
 - Source space region (default is EU).
 - Target space region (default is EU).
-- Delete assets in source space (default is no). Set to `yes` to delete the assets from the source space.
-- Detect size of images without size in the URL (default is no). Set to `yes` to make the script add the size for you during the migration.
+- Delete assets in source space (default is no). Set to `yes` to delete the assets from the source space after the cloning is complete. Use just if strictly necessary. 
+- Detect size of images without size in the URL (default is no). Set to `yes` to make the script add the size for you during the migration. Just useful if sizes are missing also on the source space.
