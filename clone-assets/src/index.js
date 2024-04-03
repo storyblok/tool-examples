@@ -16,7 +16,8 @@ export default class Migration {
     sourceRegion,
     targetRegion,
     clearSource,
-    detectImageSize
+    detectImageSize,
+    usedAssets
   ) {
     this.sourceSpaceId = sourceSpaceId;
     this.targetSpaceId = targetSpaceId;
@@ -30,6 +31,7 @@ export default class Migration {
     this.retriesLimit = 4;
     this.detectImageSize = detectImageSize === "yes";
     this.clearSource = clearSource === "yes";
+    this.usedAssets = usedAssets === "yes";
     this.mapiClient = new StoryblokClient({
       oauthToken: this.oauth,
       region: this.sourceRegion,
@@ -65,7 +67,6 @@ export default class Migration {
    * Print a message of the completed step
    */
   stepMessageEnd(index, text) {
-    const stepsTotal = this.clearSource ? 8 : 7;
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     process.stdout.write(`${chalk.black.bgGreen(` ${index}/${this.stepsTotal} `)} ${text}\n`);
@@ -132,6 +133,7 @@ export default class Migration {
         links.map(link => this.targetMapiClient.get(`spaces/${this.targetSpaceId}/stories/${link.id}`))
       );
       this.storiesList = storiesResponsesManagement.map((r) => r.data.story);
+      this.stringifiedStories = JSON.stringify(this.storiesList);
       this.stepMessageEnd("1", `Stories fetched from target space.`);
     } catch (err) {
       console.log(err);
@@ -193,7 +195,13 @@ export default class Migration {
           delete asset.published_at;
           delete asset.deleted_at;
           return asset;
+        })
+      if(this.usedAssets) {
+        this.assetsList = this.assetsList.filter((asset) => {
+          const filename = this.getAssetFilename(asset.filename);
+          return this.stringifiedStories.indexOf(filename) > -1;
         });
+      }
       this.stepMessageEnd("3", `Fetched assets from source space.`);
     } catch (err) {
       this.migrationError(
@@ -503,7 +511,7 @@ export default class Migration {
    */
   async deleteAssetsInSource() {
     this.stepMessage("8", `Deleting assets from source space.`);
-    await Promise.allSettled(this.assetsList.map(asset => this.mapiClient.delete(`spaces/${this.targetSpaceId}/assets/${asset.id}`)));
+    await Promise.allSettled(this.assetsList.map(async (asset) => await this.mapiClient.delete(`spaces/${this.sourceSpaceId}/assets/${asset.id}`)));
     this.stepMessageEnd("8", `Deleting assets from source space.`);
   }
 }
