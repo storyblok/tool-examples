@@ -243,6 +243,17 @@ export default class Migration {
   }
 
   /**
+   * 
+   * Return the clean filename of an asset without the S3 bucket reference
+   */
+  getAssetFilename(filename) {
+    if(typeof filename === "string") {
+      return `/${filename.slice(filename.search("\/a(-[a-z]+)?.storyblok.com\/"))}`;
+    }
+    return filename;
+  }
+
+  /**
    * Upload Assets to the target space
    */
   async uploadAssets() {
@@ -255,10 +266,10 @@ export default class Migration {
         this.assetsList,
         this.simultaneousUploads,
         async (asset) => {
-          const assetUrl = asset.filename.replace("s3.amazonaws.com/", "");
+          const assetUrl = this.getAssetFilename(asset.filename);
           const assetData = JSON.parse(JSON.stringify(asset));
           delete assetData.filename;
-          this.assets.push({ originalUrl: assetUrl, originalId: assetData.id });
+          this.assets.push({ originalUrl: assetUrl, newUrl: assetUrl, originalId: assetData.id });
           delete assetData.id;
           await this.uploadAsset(assetUrl, assetData);
           this.stepMessage(
@@ -280,7 +291,8 @@ export default class Migration {
    * Return an object with filename, folder and filepath of an asset in the temp folder
    */
   getLocalAssetData(url) {
-    const urlParts = url.replace("https://a.storyblok.com/f/", "").split("/");
+    const rootRegex = /\/\/a(-[a-z]+)?.storyblok.com\/f\//i
+    const urlParts = url.replace(rootRegex, "").split("/");
     const size = urlParts.length === 4 ? urlParts[1] : "";
 
     return {
@@ -306,7 +318,7 @@ export default class Migration {
     const file = fs.createWriteStream(localAssetData.filepath);
     return new Promise((resolve, reject) => {
       https
-        .get(url, (res) => {
+        .get(`https://${url}`, (res) => {
           res.pipe(file);
           file.on("finish", function () {
             file.close(resolve(true));
@@ -325,7 +337,7 @@ export default class Migration {
     try {
       const localAssetData = this.getLocalAssetData(assetUrl);
       await this.downloadAsset(assetUrl);
-      let newAssetPayload = { ...storyblokAssetData, filename: assetUrl, size: localAssetData.size };
+      let newAssetPayload = { ...storyblokAssetData, filename: assetUrl };
       const newAssetRequest = await this.targetMapiClient.post(
         `spaces/${this.targetSpaceId}/assets`,
         newAssetPayload
@@ -397,11 +409,11 @@ export default class Migration {
   replaceAssetInData(data, asset) {
     if(Array.isArray(data)) {
       return data.map(item => this.replaceAssetInData(item, asset))
-    } else if(data && typeof data === "object" && data.filename === asset.originalUrl && data.id === asset.originalId) {
+    } else if(data && typeof data === "object" && this.getAssetFilename(data.filename) === asset.originalUrl && data.id === asset.originalId) {
       return {...data, id: asset.newId, filename: asset.newUrl}
     } else if(data && typeof data === "object") {
       return Object.keys(data).reduce((newObject, key) => {const propertyValue = this.replaceAssetInData(data[key], asset); newObject[key] = propertyValue; return newObject;}, {});
-    } else if(data && typeof data === "string" && data === asset.originalUrl.replace("https:", '')) {
+    } else if(data && typeof data === "string" && this.getAssetFilename(data) === asset.originalUrl) {
       return asset.newUrl.replace("https:", '');
     }
     return data;
