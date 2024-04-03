@@ -10,4 +10,13 @@ Clone Assets | A tool to clone assets from a space to its clone | [Christian Zop
 
 ## How to use
 
-Run `npm i` to install and then `npm run start`. You'll have to provide a Personal Access Token from your account, the id of the source space, the id of the target space and the number of the max simultaneous uploads. The default for the max simultaneous uploads is 20 but you can increase it slightly to make the upload faster if your computer and connection can handle it or you can decrease it if you want to use less bandwidth and memory.  
+Run `npm i` to install and then `npm run start`. There are the parameters you will get asked:
+
+- Personal Access Token from your account.
+- Source space id.
+- Target space id.
+- Max simultaneous uploads (default is 20).
+- Source space region (default is EU).
+- Target space region (default is EU).
+- Delete assets in source space (default is no). Set to `yes` to delete the assets from the source space after the cloning is complete. Use just if strictly necessary. 
+- Detect size of images without size in the URL (default is no). Set to `yes` to make the script add the size for you during the migration. Just useful if sizes are missing also on the source space.

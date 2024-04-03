@@ -35,9 +35,21 @@ const questions = [
     message: "Please enter the Region code for the target space. Leave empty for default EU region",
     default: null
   },
+  {
+    type: 'input',
+    name: 'clearSource',
+    message: "Do you want to delete the assets from the source space? (yes/no)",
+    default: "no"
+  },
+  {
+    type: 'input',
+    name: 'detectImageSize',
+    message: "Detect the size of images without size in the URL? (yes/no)",
+    default: "no"
+  },
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion)
+  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion, answers.clearSource, answers.detectImageSize)
   migration.start()
 })
