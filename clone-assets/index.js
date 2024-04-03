@@ -47,9 +47,15 @@ const questions = [
     message: "Detect the size of images without size in the URL? (yes/no)",
     default: "no"
   },
+  {
+    type: 'input',
+    name: 'usedAssets',
+    message: "Do you want to import only the used assets? (yes/no)",
+    default: "no"
+  },
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion, answers.clearSource, answers.detectImageSize)
+  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion, answers.clearSource, answers.detectImageSize, answers.usedAssets)
   migration.start()
 })
