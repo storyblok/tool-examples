@@ -484,7 +484,7 @@ export default class Migration {
             post_data
           );
           this.stepMessage(
-            "5",
+            "7",
             ``,
             `${++total} of ${storiesWithUpdates.length} stories updated.`
           );
