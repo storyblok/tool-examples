@@ -17,7 +17,8 @@ export default class Migration {
     targetRegion,
     clearSource,
     detectImageSize,
-    usedAssets
+    usedAssets,
+    duplicateFolders
   ) {
     this.sourceSpaceId = sourceSpaceId;
     this.targetSpaceId = targetSpaceId;
@@ -25,13 +26,14 @@ export default class Migration {
     this.simultaneousUploads = simultaneousUploads;
     this.sourceRegion = (sourceRegion || "eu").toLowerCase();
     this.targetRegion = (targetRegion || "eu").toLowerCase();
-    this.assetsFolders = [];
+    this.targetAssetsFolders = [];
     this.assetsRetries = {};
-    this.assetsFoldersMap = {};
+    this.sourceAssetsFoldersMap = {};
     this.retriesLimit = 4;
     this.detectImageSize = detectImageSize === "yes";
     this.clearSource = clearSource === "yes";
     this.usedAssets = usedAssets === "yes";
+    this.duplicateFolders = duplicateFolders === "yes";
     this.mapiClient = new StoryblokClient({
       oauthToken: this.oauth,
       region: this.sourceRegion,
@@ -144,19 +146,49 @@ export default class Migration {
   }
 
   /**
+   * 
+   * Map child folders
+   */
+  mapChildFolders(sourceFolder, targetFolder) {
+    const targetChildren = this.sourceAssetsFolders.filter(folder => folder.parent_id === targetFolder.id);
+    const sourceChildren = this.targetAssetsFolders.filter(folder => folder.parent_id === sourceFolder.id);
+    targetChildren.forEach(targetChildFolder => {
+      const sourceChildFolder = sourceChildren?.find(folder => folder.name === targetChildFolder.name);
+      if(sourceChildFolder) {
+        this.sourceAssetsFoldersMap[targetChildFolder.id] = sourceChildFolder.id;
+        this.mapChildFolders(sourceChildFolder, targetChildFolder);
+      }
+    });
+  }
+
+  /**
    * Get the Assets list from the source space
    */
   async getAssetsFolders() {
-    this.stepMessage("2", `Fetching assets folders from source space.`);
+    this.stepMessage("2", `Fetching assets folders from source and target.`);
     try {
-      const assetsFoldersRequest = await this.mapiClient.get(
+      const sourceAssetsFoldersRequest = await this.mapiClient.get(
         `spaces/${this.sourceSpaceId}/asset_folders`
       );
-      this.assetsFolders = assetsFoldersRequest.data.asset_folders;
-      this.stepMessageEnd("2", `Fetching assets folders from source space.`);
+      const targetAssetsFoldersRequest = await this.targetMapiClient.get(
+        `spaces/${this.targetSpaceId}/asset_folders`
+      );
+      this.targetAssetsFolders = targetAssetsFoldersRequest.data.asset_folders;
+      this.sourceAssetsFolders = sourceAssetsFoldersRequest.data.asset_folders;
+      if(!this.duplicateFolders) {
+        const targetRootFolders = this.sourceAssetsFolders.filter(f => !f.parent_id);
+        targetRootFolders.forEach((targetFolder) => {
+          const sourceFolder = this.targetAssetsFolders.find(sourceFolder => targetFolder.name === sourceFolder.name && !sourceFolder.parent_id);
+          if (sourceFolder) {
+            this.sourceAssetsFoldersMap[targetFolder.id] = sourceFolder.id;
+            this.mapChildFolders(sourceFolder, targetFolder);
+          }
+        });
+      }
+      this.stepMessageEnd("2", `Fetching assets folders from source and target.`);
     } catch (err) {
       this.migrationError(
-        "Error fetching the assets folders. Please double check the source space id."
+        "Error fetching the assets folders. Please double check the source and target space IDs."
       );
     }
   }
@@ -199,11 +231,13 @@ export default class Migration {
       if(this.usedAssets) {
         this.assetsList = this.assetsList.filter((asset) => {
           const filename = this.getAssetFilename(asset.filename);
-          return this.stringifiedStories.indexOf(filename) > -1;
+          return this.stringifiedStories.indexOf(filename) == -1;
         });
       }
+      fs.writeFileSync("./log.json", JSON.stringify(this.assetsList, 1, 4))
       this.stepMessageEnd("3", `Fetched assets from source space.`);
     } catch (err) {
+      console.log(err)
       this.migrationError(
         "Error fetching the assets. Please double check the source space id."
       );
@@ -216,29 +250,29 @@ export default class Migration {
   async createAssetsFolders() {
     this.stepMessage("4", `Creating assets folders in target space.`);
     try {
-      for (let index = 0; index < this.assetsFolders.length; index++) {
-        const currentFolder = this.assetsFolders[index];
+      const foldersToCreate = this.sourceAssetsFolders.filter(folder => !this.sourceAssetsFoldersMap[folder.id]);
+      for (let index = 0; index < foldersToCreate.length; index++) {
+        const currentFolder = foldersToCreate[index];
         const folderResponse = await this.targetMapiClient.post(
           `spaces/${this.targetSpaceId}/asset_folders`,
           {
             name: currentFolder.name
           }
         );
-        this.assetsFoldersMap[currentFolder.id] =
+        this.sourceAssetsFoldersMap[currentFolder.id] =
           folderResponse.data.asset_folder.id;
-        this.assetsFolders
-          .filter((f) => !f.updated)
-          .forEach((folder) => {
-            if (folder.parent_id === currentFolder.id) {
-              folder.parent_id = folderResponse.data.asset_folder.id;
-              folder.updated = true;
-            }
-          });
       }
-      const foldersWithParent = this.assetsFolders.filter(f => f.parent_id);
+      foldersToCreate
+        .filter((f) => !f.updated)
+        .forEach((folder) => {
+          if(folder.parent_id && this.sourceAssetsFoldersMap[folder.parent_id]) {
+            folder.parent_id = this.sourceAssetsFoldersMap[folder.parent_id];
+          }
+        });
+      const foldersWithParent = foldersToCreate.filter(f => f.parent_id);
       for (let index = 0; index < foldersWithParent.length; index++) {
         const currentFolder = foldersWithParent[index];
-        const currentFolderId = this.assetsFoldersMap[currentFolder.id];
+        const currentFolderId = this.sourceAssetsFoldersMap[currentFolder.id];
         await this.targetMapiClient.put(
           `spaces/${this.targetSpaceId}/asset_folders/${currentFolderId}`,
           {
@@ -247,7 +281,7 @@ export default class Migration {
         );
       }
       this.assetsList.forEach((asset) => {
-        asset.asset_folder_id = this.assetsFoldersMap[asset.asset_folder_id];
+        asset.asset_folder_id = this.sourceAssetsFoldersMap[asset.asset_folder_id];
       });
       this.stepMessageEnd("4", `Assets folders created in target space`);
     } catch (err) {
