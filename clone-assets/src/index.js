@@ -147,7 +147,7 @@ export default class Migration {
 
   /**
    * 
-   * Map child folders
+   * Map child folders recursively from source to target to prevent folders duplication
    */
   mapChildFolders(sourceFolder, targetFolder) {
     const targetChildren = this.sourceAssetsFolders.filter(folder => folder.parent_id === targetFolder.id);
@@ -170,13 +170,15 @@ export default class Migration {
       const sourceAssetsFoldersRequest = await this.mapiClient.get(
         `spaces/${this.sourceSpaceId}/asset_folders`
       );
-      const targetAssetsFoldersRequest = await this.targetMapiClient.get(
-        `spaces/${this.targetSpaceId}/asset_folders`
-      );
-      this.targetAssetsFolders = targetAssetsFoldersRequest.data.asset_folders;
       this.sourceAssetsFolders = sourceAssetsFoldersRequest.data.asset_folders;
+      // Prevent folders duplication
       if(!this.duplicateFolders) {
+        const targetAssetsFoldersRequest = await this.targetMapiClient.get(
+          `spaces/${this.targetSpaceId}/asset_folders`
+        );
+        this.targetAssetsFolders = targetAssetsFoldersRequest.data.asset_folders;
         const targetRootFolders = this.sourceAssetsFolders.filter(f => !f.parent_id);
+        // Map source folders to target folders on the root level
         targetRootFolders.forEach((targetFolder) => {
           const sourceFolder = this.targetAssetsFolders.find(sourceFolder => targetFolder.name === sourceFolder.name && !sourceFolder.parent_id);
           if (sourceFolder) {
