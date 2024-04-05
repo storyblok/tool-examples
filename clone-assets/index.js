@@ -53,9 +53,15 @@ const questions = [
     message: "Do you want to import only the used assets? (yes/no)",
     default: "no"
   },
+  {
+    type: 'input',
+    name: 'duplicateFolders',
+    message: "Do you want to duplicate the assets folders if they already exist in the target space? (yes/no)",
+    default: "no"
+  },
 ]
 
 inquirer.prompt(questions).then((answers) => {
-  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion, answers.clearSource, answers.detectImageSize, answers.usedAssets)
+  const migration = new Migration(answers.oauth, answers.sourceSpaceId, answers.targetSpaceId, answers.simultaneousUploads, answers.region, answers.targetRegion, answers.clearSource, answers.detectImageSize, answers.usedAssets, answers.duplicateFolders)
   migration.start()
 })
