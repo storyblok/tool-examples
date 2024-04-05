@@ -29,7 +29,7 @@ export default class Migration {
     this.targetAssetsFolders = [];
     this.assetsRetries = {};
     this.sourceAssetsFoldersMap = {};
-    this.retriesLimit = 4;
+    this.retriesLimit = 15;
     this.detectImageSize = detectImageSize === "yes";
     this.clearSource = clearSource === "yes";
     this.usedAssets = usedAssets === "yes";
