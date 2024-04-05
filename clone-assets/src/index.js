@@ -236,7 +236,6 @@ export default class Migration {
           return this.stringifiedStories.indexOf(filename) == -1;
         });
       }
-      fs.writeFileSync("./log.json", JSON.stringify(this.assetsList, 1, 4))
       this.stepMessageEnd("3", `Fetched assets from source space.`);
     } catch (err) {
       console.log(err)
@@ -247,12 +246,20 @@ export default class Migration {
   }
 
   /**
+   * Check if a folder and its ancestors are not orphans
+   */
+  folderNotOrphan(folder) {
+    const parentFolder = this.sourceAssetsFolders.find(f => f.id === folder.parent_id);
+    return !folder.parent_id || (parentFolder && this.folderNotOrphan(parentFolder));
+  }
+
+  /**
    * Get the Assets list from the source space
    */
   async createAssetsFolders() {
     this.stepMessage("4", `Creating assets folders in target space.`);
     try {
-      const foldersToCreate = this.sourceAssetsFolders.filter(folder => !this.sourceAssetsFoldersMap[folder.id]);
+      const foldersToCreate = this.sourceAssetsFolders.filter(f => !this.sourceAssetsFoldersMap[f.id] &&  this.folderNotOrphan(f));
       for (let index = 0; index < foldersToCreate.length; index++) {
         const currentFolder = foldersToCreate[index];
         const folderResponse = await this.targetMapiClient.post(
@@ -263,14 +270,15 @@ export default class Migration {
         );
         this.sourceAssetsFoldersMap[currentFolder.id] =
           folderResponse.data.asset_folder.id;
+        this.targetAssetsFolders.push(folderResponse.data.asset_folder);
       }
       foldersToCreate
-        .filter((f) => !f.updated)
         .forEach((folder) => {
           if(folder.parent_id && this.sourceAssetsFoldersMap[folder.parent_id]) {
             folder.parent_id = this.sourceAssetsFoldersMap[folder.parent_id];
           }
-        });
+        })
+      this.foldersToCreate = foldersToCreate;
       const foldersWithParent = foldersToCreate.filter(f => f.parent_id);
       for (let index = 0; index < foldersWithParent.length; index++) {
         const currentFolder = foldersWithParent[index];
@@ -485,7 +493,6 @@ export default class Migration {
     this.updatedStories = this.storiesList.slice(0);
     this.assets.forEach((asset, index) => {
       this.updatedStories = this.replaceAssetInData(this.updatedStories, asset);
-      fs.writeFileSync("./log.json", JSON.stringify(this.updatedStories, 1, 4))
       this.stepMessage(
         "4",
         ``,
@@ -540,6 +547,7 @@ export default class Migration {
         ? "story"
         : "stories"
     } in target space.`);
+    fs.writeFileSync("./log.json", JSON.stringify({"updated-stories": storiesWithUpdates, "uploaded-assets": this.assetsList, "created-folders": this.foldersToCreate}, 1, 4));
   }
 
   /**
