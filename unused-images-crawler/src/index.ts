@@ -1,16 +1,15 @@
 import chalk from "chalk";
-import StoryblokClient, {ISbStoryData, ISbResult} from "storyblok-js-client";
+import StoryblokClient, { ISbStoryData, ISbResult } from "storyblok-js-client";
 
 interface AssetFolderResponse {
-  link_uuids: string[]
-	links: string[]
-	rel_uuids: string[]
-	rels: any
-	story: ISbStoryData
-	stories: Array<ISbStoryData>
+  link_uuids: string[];
+  links: string[];
+  rel_uuids: string[];
+  rels: any;
+  story: ISbStoryData;
+  stories: Array<ISbStoryData>;
   data: any;
 }
-// Throttling
 export default class CleanUpAssets {
   spaceId: number;
   paToken: string;
@@ -26,11 +25,17 @@ export default class CleanUpAssets {
   assetsList: any[];
   unusedAssetsList: any[];
 
-  constructor(paToken: string, spaceId: number, region: string, deleteAssets: boolean, folder?: string) {
+  constructor(
+    paToken: string,
+    spaceId: number,
+    region: string,
+    deleteAssets: boolean,
+    folder?: string
+  ) {
     this.spaceId = spaceId;
     this.paToken = paToken;
     this.region = (region || "eu").toLowerCase();
-    this.deleteAssets =  deleteAssets;
+    this.deleteAssets = deleteAssets;
     this.unusedImagesFolderName = folder || "Unused Assets";
     this.mapiClient = new StoryblokClient({
       oauthToken: this.paToken,
@@ -64,9 +69,7 @@ export default class CleanUpAssets {
   stepMessageEnd(index: string, text: string) {
     process.stdout.clearLine(0);
     process.stdout.cursorTo(0);
-    process.stdout.write(
-      `${chalk.black.bgGreen(` ${index}/3 `)} ${text}\n`
-    );
+    process.stdout.write(`${chalk.black.bgGreen(` ${index}/3 `)} ${text}\n`);
   }
 
   /**
@@ -93,9 +96,7 @@ export default class CleanUpAssets {
    */
   async getaccessToken() {
     try {
-      const spaceRequest = await this.mapiClient.get(
-        `spaces/${this.spaceId}`
-      );
+      const spaceRequest = await this.mapiClient.get(`spaces/${this.spaceId}`);
       this.accessToken = spaceRequest.data.space.first_token;
       this.cdnApiClient = new StoryblokClient({
         accessToken: this.accessToken,
@@ -122,9 +123,7 @@ export default class CleanUpAssets {
       });
       const storiesResponsesManagement = await Promise.all(
         links.map((link) =>
-          this.mapiClient.get(
-            `spaces/${this.spaceId}/stories/${link.id}`
-          )
+          this.mapiClient.get(`spaces/${this.spaceId}/stories/${link.id}`)
         )
       );
       this.storiesList = storiesResponsesManagement.map((r) => r.data.story);
@@ -188,7 +187,7 @@ export default class CleanUpAssets {
     return filename;
   }
 
-  /** 
+  /**
    * Search for the destination folder by name and create it if it doesn't exist
    */
   async checkAndCreateFolder() {
@@ -201,12 +200,12 @@ export default class CleanUpAssets {
         (folder) => folder.name === this.unusedImagesFolderName
       );
       if (!unusedImagesFolder) {
-        const newFolder = await this.mapiClient.post(
+        const newFolder = (await this.mapiClient.post(
           `spaces/${this.spaceId}/asset_folders`,
           {
             name: this.unusedImagesFolderName,
           }
-        ) as AssetFolderResponse;
+        )) as AssetFolderResponse;
         this.unusedImagesFolderId = newFolder.data.asset_folder.id;
       } else {
         this.unusedImagesFolderId = unusedImagesFolder.id;
@@ -220,24 +219,41 @@ export default class CleanUpAssets {
    * Move assets in a folder
    */
   async moveAssetsInFolder() {
-    this.stepMessage("3", `Moving assets in the "${this.unusedImagesFolderName}" folder`);
+    this.stepMessage(
+      "3",
+      `Moving assets in the "${this.unusedImagesFolderName}" folder`
+    );
     await this.checkAndCreateFolder();
     const moveOps = await Promise.allSettled(
-      this.unusedAssetsList.filter(asset => asset.asset_folder_id !== this.unusedImagesFolderId).map(
-        async (asset) =>
-          await this.mapiClient.put(
-            `spaces/${this.spaceId}/assets/${asset.id}`, {...asset, asset_folder_id: this.unusedImagesFolderId}
-          )
-      )
+      this.unusedAssetsList
+        .filter((asset) => asset.asset_folder_id !== this.unusedImagesFolderId)
+        .map(
+          async (asset) =>
+            await this.mapiClient.put(
+              `spaces/${this.spaceId}/assets/${asset.id}`,
+              { ...asset, asset_folder_id: this.unusedImagesFolderId }
+            )
+        )
     );
-    this.stepMessageEnd("3", `Moving assets in the "${this.unusedImagesFolderName}" folder`);
-    const successfulOps = moveOps.filter(operation => operation.status === "fulfilled").length;
-    const failedOps = moveOps.filter(operation => operation.status !== "fulfilled").length
-    if(successfulOps) {
-      console.log(`${successfulOps} asset${successfulOps > 1 ? "s" : ""} transferred`);
+    this.stepMessageEnd(
+      "3",
+      `Moving assets in the "${this.unusedImagesFolderName}" folder`
+    );
+    const successfulOps = moveOps.filter(
+      (operation) => operation.status === "fulfilled"
+    ).length;
+    const failedOps = moveOps.filter(
+      (operation) => operation.status !== "fulfilled"
+    ).length;
+    if (successfulOps) {
+      console.log(
+        `${successfulOps} asset${successfulOps > 1 ? "s" : ""} transferred`
+      );
     }
-    if(failedOps) {
-      console.log(`${failedOps} failed transfer operation${successfulOps > 1 ? "s" : ""}`);
+    if (failedOps) {
+      console.log(
+        `${failedOps} failed transfer operation${successfulOps > 1 ? "s" : ""}`
+      );
     }
   }
 
@@ -250,18 +266,27 @@ export default class CleanUpAssets {
       this.unusedAssetsList.map(
         async (asset) =>
           await this.mapiClient.delete(
-            `spaces/${this.spaceId}/assets/${asset.id}`, {}
+            `spaces/${this.spaceId}/assets/${asset.id}`,
+            {}
           )
       )
     );
     this.stepMessageEnd("3", `Deleting assets from the space.`);
-    const successfulOps = deleteOps.filter(operation => operation.status === "fulfilled").length;
-    const failedOps = deleteOps.filter(operation => operation.status !== "fulfilled").length
-    if(successfulOps) {
-      console.log(`${successfulOps} asset${successfulOps > 1 ? "s" : ""} deleted`);
+    const successfulOps = deleteOps.filter(
+      (operation) => operation.status === "fulfilled"
+    ).length;
+    const failedOps = deleteOps.filter(
+      (operation) => operation.status !== "fulfilled"
+    ).length;
+    if (successfulOps) {
+      console.log(
+        `${successfulOps} asset${successfulOps > 1 ? "s" : ""} deleted`
+      );
     }
-    if(failedOps) {
-      console.log(`${failedOps} failed deletion${successfulOps > 1 ? "s" : ""}`);
+    if (failedOps) {
+      console.log(
+        `${failedOps} failed deletion${successfulOps > 1 ? "s" : ""}`
+      );
     }
   }
 }
