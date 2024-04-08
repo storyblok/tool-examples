@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import StoryblokClient, {ISbStoryData, ISbResult, ISbContentMangmntAPI, ISbResponse} from "storyblok-js-client";
+import StoryblokClient, {ISbStoryData, ISbResult} from "storyblok-js-client";
 import FormData from "form-data";
 import https from "https";
 import fs from "fs";
@@ -431,7 +431,7 @@ export default class Migration {
         const dimensions = sizeOf(localAssetData.filepath);
         size = `${dimensions.width}x${dimensions.height}`;
       }
-      let newAssetPayload = { ...storyblokAssetData, filename: assetUrl, size };
+      const newAssetPayload = { ...storyblokAssetData, filename: assetUrl, size };
       const newAssetRequest = await this.targetMapiClient.post(
         `spaces/${this.targetSpaceId}/assets`,
         newAssetPayload
@@ -441,8 +441,8 @@ export default class Migration {
       }
 
       const signedRequest = newAssetRequest.data;
-      let form = new FormData();
-      for (let key in signedRequest.fields) {
+      const form = new FormData();
+      for (const key in signedRequest.fields) {
         form.append(key, signedRequest.fields[key]);
       }
       form.append("file", fs.createReadStream(localAssetData.filepath));
@@ -458,7 +458,7 @@ export default class Migration {
           if (err) {
             resolve({ success: false });
           } else {
-            let assetObject = this.assets.find(
+            const assetObject = this.assets.find(
               (item) => item && item.originalUrl == assetUrl
             );
             if(assetObject) {
@@ -547,7 +547,7 @@ export default class Migration {
     const migrationResult = await Promise.allSettled(
       storiesWithUpdates.map(async (story) => {
         delete story.content._editable;
-        let post_data: any = { story };
+        const post_data: any = { story };
         if (story.published && !story.unpublished_changes) {
           post_data.publish = 1;
         }

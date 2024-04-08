@@ -61,7 +61,7 @@ export default class BackupStorage {
    * @param {Object} asset The asset object from Storyblok
    * @returns {Bool} Success of the action
    */
-  async backupAsset(asset) {
+  async backupAsset() {
     console.log('You forgot to override the "backupAsset" method')
   }
 
@@ -127,7 +127,7 @@ export default class BackupStorage {
         } else {
           return reject(false)
         }
-      }).on('error', (err) => {
+      }).on('error', () => {
         return reject(false)
       })
     })

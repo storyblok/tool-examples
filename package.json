@@ -4,7 +4,7 @@
     "description": "a collection of tools from the community",
     "main": "index.js",
     "scripts": {
-        "lint": "eslint .",
+        "lint": "eslint . --quiet",
         "docs": "node generate-readme.js"
     },
     "keywords": [
@@ -15,7 +15,10 @@
         "markdown-magic": "^0.1.25"
     },
     "devDependencies": {
-        "eslint": "^7.32.0",
+        "@typescript-eslint/eslint-plugin": "^7.6.0",
+        "@typescript-eslint/parser": "^7.6.0",
+        "eslint": "^8.41.0",
+        "@types/node": "^20.12.5",
         "eslint-plugin-vue": "^7.17.0"
     }
 }
