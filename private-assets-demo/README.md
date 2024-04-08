@@ -1,3 +1,7 @@
+Name | Description | Author
+------------ | ------------- | -------------
+Storyblok Private Asset Demo | Repository to showcase a typical use case for Storyblok private assets. | [Edoardo Sandon](https://github.com/Edo-San) 
+
 ## Storyblok Private Asset Demo
 
 This is a demo repository to showcase a typical use case for Storyblok private assets.

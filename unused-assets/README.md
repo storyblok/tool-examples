@@ -1,4 +1,8 @@
-# Script to get unused images and assets in Storyblok
+Name | Description | Author
+------------ | ------------- | -------------
+Storyblok Unused Assets | Detect unused assets and either move them to a folder or delete them. | [Christian Zoppi](https://github.com/christianzoppi), [Alexandra Spalato](https://github.com/alexadark) 
+
+# Unused Assets Script - Move or delete them
 
 Detect unused assets and either move them to a folder or delete them. By default it moves assets into a folder, but with the `VITE_DELETE_ASSETS` parameter set to `true`, it will delete them. Assets can then be recovered from the trashbin.
 

@@ -1,7 +1,7 @@
 {
-  "name": "unused-images",
-  "version": "1.0.1",
-  "description": "Tool to find unused images in your Storyblok space and store them in a folder",
+  "name": "unused-assets",
+  "version": "0.1",
+  "description": "Tool to find unused assets in your Storyblok space and store them in a folder",
   "main": "index.js",
   "scripts": {
     "start": "vite-node ./index"
