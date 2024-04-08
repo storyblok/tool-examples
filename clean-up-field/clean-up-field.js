@@ -45,7 +45,6 @@ async function getAllStories(){
   var page = 1
   var res = await StoryblokHelper.getAll(page)
   var all = res.data.stories
-  var total = res.total
   var lastPage = Math.ceil((res.total / 25))
 
   while (page < lastPage){
@@ -61,7 +60,7 @@ async function getAllStories(){
 
     try {
       let storyResult = await Storyblok.get('spaces/' + spaceId + '/stories/' + all[i].id)
-      let updateResult = await Storyblok.put('spaces/' + spaceId + '/stories/' + all[i].id, {
+      await Storyblok.put('spaces/' + spaceId + '/stories/' + all[i].id, {
         story: {content: StoryblokHelper.cleanUp(storyResult.data.story.content)}
       })
     } catch(e) {
@@ -72,6 +71,6 @@ async function getAllStories(){
   return all
 }
 
-getAllStories().then((result) => {
+getAllStories().then(() => {
   console.log('Finished')
 })
