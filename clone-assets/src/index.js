@@ -233,7 +233,7 @@ export default class Migration {
       if(this.usedAssets) {
         this.assetsList = this.assetsList.filter((asset) => {
           const filename = this.getAssetFilename(asset.filename);
-          return this.stringifiedStories.indexOf(filename) == -1;
+          return this.stringifiedStories.indexOf(filename) !== -1;
         });
       }
       this.stepMessageEnd("3", `Fetched assets from source space.`);
