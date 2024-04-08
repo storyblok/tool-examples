@@ -1,13 +1,40 @@
 import chalk from "chalk";
-import StoryblokClient from "storyblok-js-client";
+import StoryblokClient, {ISbStoryData, ISbResult, ISbContentMangmntAPI, ISbResponse} from "storyblok-js-client";
 import FormData from "form-data";
 import https from "https";
 import fs from "fs";
 import async from "async";
 import sizeOf from "image-size"
 
-// Throttling
 export default class Migration {
+  sourceSpaceId: number;
+  targetSpaceId: number;
+  oauth: string;
+  simultaneousUploads: number;
+  sourceRegion: string;
+  targetRegion: string;
+  targetAssetsFolders: any[];
+  sourceAssetsFolders: any[];
+  assetsRetries: Record<string, number>;
+  sourceAssetsFoldersMap: Record<number, number>;
+  retriesLimit: number;
+  detectImageSize: boolean;
+  clearSource: boolean;
+  usedAssets: boolean;
+  duplicateFolders: boolean;
+  mapiClient: StoryblokClient;
+  targetMapiClient: StoryblokClient;
+  cdnApiClient: StoryblokClient;
+  stepsTotal: number;
+  targetSpaceToken: string;
+  storiesList: ISbStoryData[];
+  updatedStories: ISbStoryData[];
+  stringifiedStoriesList: string;
+  assetsList: any[];
+  unusedAssetsList: any[];
+  foldersToCreate: any[];
+  assets: {originalUrl: string, newUrl: string, originalId: number, newId?: number}[];
+
   constructor(
     oauth,
     sourceSpaceId,
@@ -30,10 +57,10 @@ export default class Migration {
     this.assetsRetries = {};
     this.sourceAssetsFoldersMap = {};
     this.retriesLimit = 15;
-    this.detectImageSize = detectImageSize === "yes";
-    this.clearSource = clearSource === "yes";
-    this.usedAssets = usedAssets === "yes";
-    this.duplicateFolders = duplicateFolders === "yes";
+    this.detectImageSize = detectImageSize;
+    this.clearSource = clearSource;
+    this.usedAssets = usedAssets;
+    this.duplicateFolders = duplicateFolders;
     this.mapiClient = new StoryblokClient({
       oauthToken: this.oauth,
       region: this.sourceRegion,
@@ -55,8 +82,8 @@ export default class Migration {
   /**
    * Print a message of the current step
    */
-  stepMessage(index, text, append_text) {
-    process.stdout.clearLine();
+  stepMessage(index: string, text: string, append_text?: string) {
+    process.stdout.clearLine(0);
     process.stdout.cursorTo(0);
     process.stdout.write(
       `${chalk.white.bgBlue(` ${index}/${this.stepsTotal} `)} ${text} ${
@@ -68,8 +95,8 @@ export default class Migration {
   /**
    * Print a message of the completed step
    */
-  stepMessageEnd(index, text) {
-    process.stdout.clearLine();
+  stepMessageEnd(index: string, text: string) {
+    process.stdout.clearLine(0);
     process.stdout.cursorTo(0);
     process.stdout.write(`${chalk.black.bgGreen(` ${index}/${this.stepsTotal} `)} ${text}\n`);
   }
@@ -135,7 +162,7 @@ export default class Migration {
         links.map(link => this.targetMapiClient.get(`spaces/${this.targetSpaceId}/stories/${link.id}`))
       );
       this.storiesList = storiesResponsesManagement.map((r) => r.data.story);
-      this.stringifiedStories = JSON.stringify(this.storiesList);
+      this.stringifiedStoriesList = JSON.stringify(this.storiesList);
       this.stepMessageEnd("1", `Stories fetched from target space.`);
     } catch (err) {
       console.log(err);
@@ -208,8 +235,8 @@ export default class Migration {
           page: 1,
         }
       );
-      const pages_total = Math.ceil(assetsPageRequest.headers.total / 100);
-      const assets_requests = [];
+      const pages_total = Math.ceil(assetsPageRequest.total / 100);
+      const assets_requests = [] as Promise<ISbResult>[];
       for (let i = 1; i <= pages_total; i++) {
         assets_requests.push(
           this.mapiClient.get(`spaces/${this.sourceSpaceId}/assets`, {
@@ -233,7 +260,7 @@ export default class Migration {
       if(this.usedAssets) {
         this.assetsList = this.assetsList.filter((asset) => {
           const filename = this.getAssetFilename(asset.filename);
-          return this.stringifiedStories.indexOf(filename) !== -1;
+          return this.stringifiedStoriesList.indexOf(filename) !== -1;
         });
       }
       this.stepMessageEnd("3", `Fetched assets from source space.`);
@@ -267,7 +294,7 @@ export default class Migration {
           {
             name: currentFolder.name
           }
-        );
+        ) as any;
         this.sourceAssetsFoldersMap[currentFolder.id] =
           folderResponse.data.asset_folder.id;
         this.targetAssetsFolders.push(folderResponse.data.asset_folder);
@@ -339,9 +366,9 @@ export default class Migration {
           );
         },
         () => {
-          process.stdout.clearLine();
+          process.stdout.clearLine(0);
           this.stepMessageEnd("5", `Uploaded assets to target space.`);
-          resolve();
+          resolve(true);
         }
       );
     });
@@ -371,7 +398,7 @@ export default class Migration {
   /**
    * Download an asset and store it into the temp folder
    */
-  async downloadAsset(url) {
+  async downloadAsset(url: string) {
     const localAssetData = this.getLocalAssetData(url);
     if (!fs.existsSync(localAssetData.folder)) {
       fs.mkdirSync(localAssetData.folder);
@@ -382,7 +409,8 @@ export default class Migration {
         .get(`https://${url}`, (res) => {
           res.pipe(file);
           file.on("finish", function () {
-            file.close(resolve(true));
+            file.close();
+            resolve(true);
           });
         })
         .on("error", () => {
@@ -394,7 +422,7 @@ export default class Migration {
   /**
    * Upload a single Asset to the space
    */
-  async uploadAsset(assetUrl, storyblokAssetData) {
+  async uploadAsset(assetUrl: string, storyblokAssetData) {
     try {
       const localAssetData = this.getLocalAssetData(assetUrl);
       let size = localAssetData.size;
@@ -407,9 +435,9 @@ export default class Migration {
       const newAssetRequest = await this.targetMapiClient.post(
         `spaces/${this.targetSpaceId}/assets`,
         newAssetPayload
-      );
+      ) as any;
       if (newAssetRequest.status != 200) {
-        return resolve({ success: false });
+        return Promise.resolve({ success: false });
       }
 
       const signedRequest = newAssetRequest.data;
@@ -433,19 +461,21 @@ export default class Migration {
             let assetObject = this.assets.find(
               (item) => item && item.originalUrl == assetUrl
             );
-            assetObject.newUrl = `https:${signedRequest.pretty_url}`;
-            assetObject.newId = signedRequest.id;
+            if(assetObject) {
+              assetObject.newUrl = `https:${signedRequest.pretty_url}`;
+              assetObject.newId = signedRequest.id;
 
-            this.targetMapiClient
-              .get(
-                `spaces/${this.targetSpaceId}/assets/${signedRequest.id}/finish_upload`
-              )
-              .then(() => {
-                resolve({ success: true });
-              })
-              .catch(() => {
-                resolve({ success: false });
-              });
+              this.targetMapiClient
+                .get(
+                  `spaces/${this.targetSpaceId}/assets/${signedRequest.id}/finish_upload`
+                )
+                .then(() => {
+                  resolve({ success: true });
+                })
+                .catch(() => {
+                  resolve({ success: false });
+                });
+            }
           }
         });
       });
@@ -454,7 +484,7 @@ export default class Migration {
         err.config?.url === `/spaces/${this.targetSpaceId}/assets` &&
         (err.code === "ECONNABORTED" || err.message.includes("429"))
       ) {
-        if (this.assetsRetries[asset] > this.retriesLimit) {
+        if (this.assetsRetries[assetUrl] > this.retriesLimit) {
           return { success: false };
         } else {
           if (!this.assetsRetries[assetUrl]) {
@@ -510,14 +540,14 @@ export default class Migration {
     const storiesWithUpdates = this.updatedStories.filter((story) => {
       const originalStory = this.storiesList.find((s) => s.id === story.id);
       return (
-        JSON.stringify(originalStory.content) !== JSON.stringify(story.content)
+        originalStory ? JSON.stringify(originalStory.content) !== JSON.stringify(story.content) : true
       );
     });
 
     const migrationResult = await Promise.allSettled(
       storiesWithUpdates.map(async (story) => {
         delete story.content._editable;
-        let post_data = { story };
+        let post_data: any = { story };
         if (story.published && !story.unpublished_changes) {
           post_data.publish = 1;
         }
@@ -537,7 +567,7 @@ export default class Migration {
         }
       })
     );
-    process.stdout.clearLine();
+    process.stdout.clearLine(0);
     this.stepMessageEnd("7", `Updated ${
       migrationResult.filter((r) => r.status === "fulfilled" && r.value)
         .length
@@ -547,7 +577,7 @@ export default class Migration {
         ? "story"
         : "stories"
     } in target space.`);
-    fs.writeFileSync("./log.json", JSON.stringify({"updated-stories": storiesWithUpdates, "uploaded-assets": this.assetsList, "created-folders": this.foldersToCreate}, 1, 4));
+    fs.writeFileSync("./log.json", JSON.stringify({"updated-stories": storiesWithUpdates, "uploaded-assets": this.assetsList, "created-folders": this.foldersToCreate}, null, 4));
   }
 
   /**
@@ -555,7 +585,7 @@ export default class Migration {
    */
   async deleteAssetsInSource() {
     this.stepMessage("8", `Deleting assets from source space.`);
-    await Promise.allSettled(this.assetsList.map(async (asset) => await this.mapiClient.delete(`spaces/${this.sourceSpaceId}/assets/${asset.id}`)));
+    await Promise.allSettled(this.assetsList.map(async (asset) => await this.mapiClient.delete(`spaces/${this.sourceSpaceId}/assets/${asset.id}`, {})));
     this.stepMessageEnd("8", `Deleting assets from source space.`);
   }
 }
