@@ -308,7 +308,7 @@ export default class Migration {
    */
   getAssetFilename(filename) {
     if(typeof filename === "string") {
-      return `/${filename.slice(filename.search("\/a(-[a-z]+)?.storyblok.com\/"))}`;
+      return `/${filename.slice(filename.search("/a(-[a-z]+)?.storyblok.com/"))}`;
     }
     return filename;
   }
