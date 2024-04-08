@@ -1,16 +1,23 @@
 # Script to get unused images and assets in Storyblok
 
-This is a small script you can use to get unused images and other assets from your content items and put them in a folder. If the folder does not exist it will be created during the process.
+Detect unused assets and either move them to a folder or delete them. By default it moves assets into a folder, but with the `VITE_DELETE_ASSETS` parameter set to `true`, it will delete them. Assets can then be recovered from the trashbin.
 
 ## How to use
 
 1. Get your personal access token from the My account section of Storyblok.
 
-2. Rename the .env.example file to .env and Exchange YOUR_PERSONAL_ACCESS_TOKEN, YOUR_SPACE_ID, YOUR_FOLDER_TO_ASSIGN with your values.
+2. Create an `.env` file with the content from `.env.example`.
 
 3. Execute the script with`npm run start`
 
 ```bash
 $ npm install
-$ node index.js
+$ npm run start
 ```
+
+## Parameters
+- `VITE_PERSONAL_ACCESS_TOKEN`: Your Personal Access Token
+- `VITE_SPACE_ID`: The Space ID of your project
+- `VITE_REGION`: The region of your space
+- `VITE_FOLDER_NAME` (optional, default: "Unused Assets"): The folder name where to move assets
+- `VITE_DELETE_ASSETS` (optional, default "false"): Set to `true` if you want to delete the assets instead of moving them to a folder.
