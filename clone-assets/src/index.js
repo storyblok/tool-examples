@@ -23,7 +23,7 @@ export default class Migration {
     this.sourceSpaceId = sourceSpaceId;
     this.targetSpaceId = targetSpaceId;
     this.oauth = oauth;
-    this.simultaneousUploads = simultaneousUploads;
+    this.simultaneousUploads = simultaneousUploads || 20;
     this.sourceRegion = (sourceRegion || "eu").toLowerCase();
     this.targetRegion = (targetRegion || "eu").toLowerCase();
     this.targetAssetsFolders = [];
