@@ -1,14 +1,10 @@
 {
   "name": "clone-assets",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Clone assets from a Storyblok space to another, replacing URLs in content.",
   "main": "index.js",
-  "type": "module",
-  "engines": {
-    "node": ">=16"
-  },
   "scripts": {
-    "start": "node index"
+    "start": "vite-node ./index"
   },
   "author": "Christian Zoppi",
   "license": "ISC",
@@ -17,7 +13,7 @@
     "chalk": "^4.1.0",
     "form-data": "^3.0.0",
     "image-size": "^1.1.1",
-    "inquirer": "^7.3.3",
-    "storyblok-js-client": "^6.6.2"
+    "storyblok-js-client": "^6.6.2",
+    "vite-node": "^1.4.0"
   }
 }

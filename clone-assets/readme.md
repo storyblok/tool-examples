@@ -10,14 +10,17 @@ Clone Assets | A tool to clone assets from a space to its clone | [Christian Zop
 
 ## How to use
 
-Run `npm i` to install and then `npm run start`. There are the parameters you will get asked:
+Copy the `.env.example` file to `.env` and fill out the variables. These are the parameters you will have to fill out:
 
-- Personal Access Token from your account.
-- Source space id.
-- Target space id.
-- Max simultaneous uploads (default is 20).
-- Source space region (default is EU).
-- Target space region (default is EU).
-- Delete assets in source space (default is no). Set to `yes` to delete the assets from the source space after the cloning is complete. Use just if strictly necessary. 
-- Detect size of images without size in the URL (default is no). Set to `yes` to make the script add the size for you during the migration. Just useful if sizes are missing also on the source space.
-- Clone only used assets (default is no). Set to `yes` to only migrate assets that are used in the target space from the source space.
+- `VITE_PERSONAL_ACCESS_TOKEN`: Personal Access Token from your account.
+- `VITE_SOURCE_SPACE_ID`: Source space id.
+- `VITE_TARGET_SPACE_ID`: Target space id.
+- `VITE_SIMULTANEOUS_UPLOADS` (optional, default is 20): Max simultaneous uploads.
+- `VITE_SOURCE_SPACE_REGION` (optional, default is EU): Source space region.
+- `VITE_TARGET_SPACE_REGION` (optional, default is EU): Target space region.
+- `VITE_CLEAR_SOURCE` (optional, default is `false`): Delete assets in source space when the migration is completed. Set to `true` to delete the assets from the source space after the cloning is complete. Use just if strictly necessary. 
+- `VITE_USED_ASSETS_ONLY` (optional, default is `false`): Clone only used assets. Set to `true` to only migrate assets that are used in the target space from the source space.
+- `VITE_DUPLICATE_FOLDERS` (optional, default is `false`): Duplicate folders with the same name when performing the migration. Set to `true` to create duplicated folders when performing the migration. By default the script will compare the folders by name and map the ones in the source space to the ones in the target space.
+- `VITE_DETECT_IMAGE_SIZE` (optional, default is `false`): Detect size of images without size in the URL. Set to `true` to make the script add the size for you during the migration. Just useful if sizes are missing also on the source space. This is useful if you have any assets without the image set because of an incorrect use of the MAPI.
+
+Then you only need to run `npm i` to install and then `npm run start` to perform the migration. The whole process can take a lot of time if your space has many assets, so it's recommended to use `VITE_USED_ASSETS_ONLY` when possible and also use a test space to perform the migration first to make sure it was completed successfully.
