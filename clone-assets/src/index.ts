@@ -70,6 +70,7 @@ export default class Migration {
       region:  this.targetRegion,
     });
     this.stepsTotal = this.clearSource ? 8 : 7;
+    console.log(this)
   }
 
   /**
@@ -404,6 +405,7 @@ export default class Migration {
       fs.mkdirSync(localAssetData.folder);
     }
     const file = fs.createWriteStream(localAssetData.filepath);
+    
     return new Promise((resolve, reject) => {
       https
         .get(`https://${url}`, (res) => {
@@ -414,6 +416,7 @@ export default class Migration {
           });
         })
         .on("error", () => {
+          file.close();
           console.error(reject(false));
         });
     });
