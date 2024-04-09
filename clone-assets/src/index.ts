@@ -406,7 +406,7 @@ export default class Migration {
     const file = fs.createWriteStream(localAssetData.filepath);
     return new Promise((resolve, reject) => {
       https
-        .get(`https://${url}`, (res) => {
+        .get(`https:${url}`, (res) => {
           res.pipe(file);
           file.on("finish", function () {
             file.close();
@@ -431,7 +431,9 @@ export default class Migration {
         const dimensions = sizeOf(localAssetData.filepath);
         size = `${dimensions.width}x${dimensions.height}`;
       }
-      const newAssetPayload = { ...storyblokAssetData, filename: assetUrl, size };
+      if(size === "x") size = "";
+      const newAssetPayload = { ...storyblokAssetData, filename: assetUrl, ...(size && {size}) };
+      
       const newAssetRequest = await this.targetMapiClient.post(
         `spaces/${this.targetSpaceId}/assets`,
         newAssetPayload
@@ -459,7 +461,7 @@ export default class Migration {
             resolve({ success: false });
           } else {
             const assetObject = this.assets.find(
-              (item) => item && item.originalUrl == assetUrl
+              (item) => item && item.originalUrl === assetUrl
             );
             if(assetObject) {
               assetObject.newUrl = `https:${signedRequest.pretty_url}`;
