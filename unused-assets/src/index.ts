@@ -164,7 +164,7 @@ export default class CleanUpAssets {
       this.assetsList = assetsResponses.map((r) => r.data.assets).flat();
       this.unusedAssetsList = this.assetsList.filter((asset) => {
         const filename = this.getAssetFilename(asset.filename);
-        return this.stringifiedStoriesList.indexOf(filename) !== -1;
+        return this.stringifiedStoriesList.indexOf(filename) === -1;
       });
       this.stepMessageEnd("2", `Fetched assets from the space.`);
     } catch (err) {
