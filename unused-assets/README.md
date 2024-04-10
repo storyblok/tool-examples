@@ -25,3 +25,4 @@ $ npm run start
 - `VITE_REGION`: The region of your space
 - `VITE_FOLDER_NAME` (optional, default: "Unused Assets"): The folder name where to move assets
 - `VITE_DELETE_ASSETS` (optional, default "false"): Set to `true` if you want to delete the assets instead of moving them to a folder.
+- `VITE_FILTER_ONLY_DUPLICATES` (optional, default "false"): Set to `true` if you want to delete only duplicated unused files. The duplicates are detected by filename and content length, it's not comparing the content too.

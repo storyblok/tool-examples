@@ -15,6 +15,7 @@ export default class CleanUpAssets {
   paToken: string;
   region: string;
   deleteAssets: boolean;
+  filterOnlyDuplicates?: boolean;
   unusedImagesFolderName: string;
   unusedImagesFolderId: number;
   mapiClient: StoryblokClient;
@@ -23,24 +24,30 @@ export default class CleanUpAssets {
   storiesList: ISbStoryData[];
   stringifiedStoriesList: string;
   assetsList: any[];
+  duplicates: any[];
   unusedAssetsList: any[];
+  stepsTotal: number;
 
   constructor(
     paToken: string,
     spaceId: number,
     region: string,
     deleteAssets: boolean,
+    filterOnlyDuplicates?: boolean,
     folder?: string
   ) {
     this.spaceId = spaceId;
     this.paToken = paToken;
     this.region = (region || "eu").toLowerCase();
     this.deleteAssets = deleteAssets;
+    this.filterOnlyDuplicates = filterOnlyDuplicates;
+    this.duplicates = [];
     this.unusedImagesFolderName = folder || "Unused Assets";
     this.mapiClient = new StoryblokClient({
       oauthToken: this.paToken,
       region: this.region,
     });
+    this.stepsTotal = this.filterOnlyDuplicates ? 4 : 3;
   }
 
   /**
@@ -57,7 +64,7 @@ export default class CleanUpAssets {
     process.stdout.clearLine(0);
     process.stdout.cursorTo(0);
     process.stdout.write(
-      `${chalk.white.bgBlue(` ${index}/3 `)} ${text} ${
+      `${chalk.white.bgBlue(` ${index}/${this.stepsTotal} `)} ${text} ${
         append_text ? chalk.black.bgYellow(` ${append_text} `) : ""
       }`
     );
@@ -69,7 +76,7 @@ export default class CleanUpAssets {
   stepMessageEnd(index: string, text: string) {
     process.stdout.clearLine(0);
     process.stdout.cursorTo(0);
-    process.stdout.write(`${chalk.black.bgGreen(` ${index}/3 `)} ${text}\n`);
+    process.stdout.write(`${chalk.black.bgGreen(` ${index}/${this.stepsTotal} `)} ${text}\n`);
   }
 
   /**
@@ -80,6 +87,7 @@ export default class CleanUpAssets {
       await this.getaccessToken();
       await this.getStories();
       await this.getAssets();
+      if (this.filterOnlyDuplicates) this.filterUnusedDuplicates();
       if (this.deleteAssets) await this.deleteAssetsInSource();
       else await this.moveAssetsInFolder();
     } catch (err) {
@@ -176,6 +184,42 @@ export default class CleanUpAssets {
   }
 
   /**
+   * Find duplicated assets
+   */
+  findDuplicates() {
+    this.assetsList.forEach((currentAsset) => {
+      if(this.duplicates.includes(currentAsset.id)) return;
+      const currentAssetFilename = currentAsset.filename.split("/").at(-1);
+      const duplicates = this.assetsList
+        .filter(
+          (asset) => {
+            const assetFilename = asset.filename.split("/").at(-1);
+            return assetFilename === currentAssetFilename &&
+            asset.content_length === currentAsset.content_length &&
+            asset.id !== currentAsset.id
+          }
+        )
+        .map((asset) => asset.id);
+      if (duplicates.length) {
+        this.duplicates = this.duplicates.concat(duplicates);
+        this.duplicates.push(currentAsset.id);
+      }
+    });
+  }
+
+  /**
+   * Filter unused duplicates
+   */
+  filterUnusedDuplicates() {
+    this.stepMessage("3", `Selecting only unused duplicated assets`);
+    this.findDuplicates();
+    this.unusedAssetsList = this.unusedAssetsList.filter(
+      (asset) => this.duplicates.indexOf(asset.id) !== -1
+    );
+    this.stepMessageEnd("3", `Selecting only unused duplicated assets`);
+  }
+
+  /**
    * Return the clean filename of an asset without the S3 bucket reference
    */
   getAssetFilename(filename) {
@@ -220,7 +264,7 @@ export default class CleanUpAssets {
    */
   async moveAssetsInFolder() {
     this.stepMessage(
-      "3",
+      `${this.stepsTotal}`,
       `Moving assets in the "${this.unusedImagesFolderName}" folder`
     );
     await this.checkAndCreateFolder();
@@ -236,7 +280,7 @@ export default class CleanUpAssets {
         )
     );
     this.stepMessageEnd(
-      "3",
+      `${this.stepsTotal}`,
       `Moving assets in the "${this.unusedImagesFolderName}" folder`
     );
     const successfulOps = moveOps.filter(
@@ -261,7 +305,7 @@ export default class CleanUpAssets {
    * Delete assets in source
    */
   async deleteAssetsInSource() {
-    this.stepMessage("3", `Deleting assets from the space.`);
+    this.stepMessage(`${this.stepsTotal}`, `Deleting assets from the space.`);
     const deleteOps = await Promise.allSettled(
       this.unusedAssetsList.map(
         async (asset) =>
@@ -271,7 +315,7 @@ export default class CleanUpAssets {
           )
       )
     );
-    this.stepMessageEnd("3", `Deleting assets from the space.`);
+    this.stepMessageEnd(`${this.stepsTotal}`, `Deleting assets from the space.`);
     const successfulOps = deleteOps.filter(
       (operation) => operation.status === "fulfilled"
     ).length;
