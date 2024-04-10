@@ -433,7 +433,6 @@ export default class Migration {
       }
       if(size === "x") size = "";
       const newAssetPayload = { ...storyblokAssetData, filename: assetUrl, ...(size && {size}) };
-      console.log(newAssetPayload)
       const newAssetRequest = await this.targetMapiClient.post(
         `spaces/${this.targetSpaceId}/assets`,
         newAssetPayload
