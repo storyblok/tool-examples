@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_REGION: string;
   readonly VITE_FOLDER_NAME?: string;
   readonly VITE_DELETE_ASSETS?: "true" | "false";
+  readonly VITE_FILTER_ONLY_DUPLICATES?: "true" | "false";
 }
 
 interface ImportMeta {
