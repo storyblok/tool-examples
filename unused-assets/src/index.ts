@@ -24,7 +24,7 @@ export default class CleanUpAssets {
   storiesList: ISbStoryData[];
   stringifiedStoriesList: string;
   assetsList: any[];
-  duplicates: any[];
+  duplicates: Record<string, number[]>;
   unusedAssetsList: any[];
   stepsTotal: number;
 
@@ -41,7 +41,7 @@ export default class CleanUpAssets {
     this.region = (region || "eu").toLowerCase();
     this.deleteAssets = deleteAssets;
     this.filterOnlyDuplicates = filterOnlyDuplicates;
-    this.duplicates = [];
+    this.duplicates = {};
     this.unusedImagesFolderName = folder || "Unused Assets";
     this.mapiClient = new StoryblokClient({
       oauthToken: this.paToken,
@@ -76,7 +76,9 @@ export default class CleanUpAssets {
   stepMessageEnd(index: string, text: string) {
     process.stdout.clearLine(0);
     process.stdout.cursorTo(0);
-    process.stdout.write(`${chalk.black.bgGreen(` ${index}/${this.stepsTotal} `)} ${text}\n`);
+    process.stdout.write(
+      `${chalk.black.bgGreen(` ${index}/${this.stepsTotal} `)} ${text}\n`
+    );
   }
 
   /**
@@ -184,25 +186,33 @@ export default class CleanUpAssets {
   }
 
   /**
+   * Get duplicates IDs
+   */
+  get duplicatesIds() {
+    return Object.values(this.duplicates).flat();
+  }
+
+  /**
    * Find duplicated assets
    */
   findDuplicates() {
     this.assetsList.forEach((currentAsset) => {
-      if(this.duplicates.includes(currentAsset.id)) return;
+      if (this.duplicatesIds.includes(currentAsset.id)) return;
       const currentAssetFilename = currentAsset.filename.split("/").at(-1);
       const duplicates = this.assetsList
-        .filter(
-          (asset) => {
-            const assetFilename = asset.filename.split("/").at(-1);
-            return assetFilename === currentAssetFilename &&
+        .filter((asset) => {
+          const assetFilename = asset.filename.split("/").at(-1);
+          return (
+            assetFilename === currentAssetFilename &&
             asset.content_length === currentAsset.content_length &&
             asset.id !== currentAsset.id
-          }
-        )
+          );
+        })
         .map((asset) => asset.id);
       if (duplicates.length) {
-        this.duplicates = this.duplicates.concat(duplicates);
-        this.duplicates.push(currentAsset.id);
+        this.duplicates[
+          `${currentAssetFilename}---${currentAsset.content_length}`
+        ] = [...duplicates, currentAsset.id];
       }
     });
   }
@@ -214,8 +224,20 @@ export default class CleanUpAssets {
     this.stepMessage("3", `Selecting only unused duplicated assets`);
     this.findDuplicates();
     this.unusedAssetsList = this.unusedAssetsList.filter(
-      (asset) => this.duplicates.indexOf(asset.id) !== -1
+      (asset) => this.duplicatesIds.indexOf(asset.id) !== -1
     );
+    const unusedAssetsListIds = this.unusedAssetsList.map((asset) => asset.id);
+    // Keep at least one duplicate if they are all unused
+    Object.keys(this.duplicates).forEach((label) => {
+      if (
+        this.duplicates[label].filter((id) => unusedAssetsListIds.includes(id))
+          .length === this.duplicates[label].length
+      ) {
+        this.unusedAssetsList = this.unusedAssetsList.filter(
+          (asset) => asset.id !== this.duplicates[label][0]
+        );
+      }
+    });
     this.stepMessageEnd("3", `Selecting only unused duplicated assets`);
   }
 
@@ -315,7 +337,10 @@ export default class CleanUpAssets {
           )
       )
     );
-    this.stepMessageEnd(`${this.stepsTotal}`, `Deleting assets from the space.`);
+    this.stepMessageEnd(
+      `${this.stepsTotal}`,
+      `Deleting assets from the space.`
+    );
     const successfulOps = deleteOps.filter(
       (operation) => operation.status === "fulfilled"
     ).length;
