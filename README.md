@@ -27,7 +27,7 @@ Each example contains a `README.md` with an explanation about the tool.
 | **[Clone Assets ](https://github.com/storyblok/tool-examples/tree/main/clone-assets)** <br/>  A tool to clone assets from a space to its clone  |  [Christian Zoppi](https://github.com/christianzoppi) |
 | **[Storyblok Private Asset Demo ](https://github.com/storyblok/tool-examples/tree/main/private-assets-demo)** <br/>  Repository to showcase a typical use case for Storyblok private assets.  |  [Edoardo Sandon](https://github.com/Edo-San)  |
 | **[Storyblok Assets Backup ](https://github.com/storyblok/tool-examples/tree/main/storyblok-assets-backup)** <br/>  Tool for differential backups of the assets of any Storyblok space  |  [Christian Zoppi](https://github.com/christianzoppi), [Gerrit Plehn](https://github.com/GerritPlehn)  |
-| **[Storyblok Unused Assets ](https://github.com/storyblok/tool-examples/tree/main/unused-assets)** <br/>  Detect unused assets and either move them to a folder or delete them.  |  [Christian Zoppi](https://github.com/christianzoppi), [Alexandra Spalato](https://github.com/alexadark)  |
+| **[Storyblok Unused Assets ](https://github.com/storyblok/tool-examples/tree/main/unused-assets)** <br/>  Detect unused assets and either move them to a folder or delete them.  |  [Christian Zoppi](https://github.com/christianzoppi) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
