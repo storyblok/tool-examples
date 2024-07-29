@@ -496,6 +496,7 @@ export default class Migration {
           return this.uploadAsset(assetUrl, storyblokAssetData);
         }
       } else {
+        console.log(err);
         return { success: false };
       }
     }
