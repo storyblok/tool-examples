@@ -41,6 +41,7 @@ The following examples live in their own Github repository.
 | **[React   Rich Text Renderer For Storyblok In Built Rte](https://github.com/dohomi/storyblok-rich-text-react-renderer-ts)** <br/> Renderer to outputs React elements, and provides options to map any Stoyblok rich text element to custom React components | [dohomi](http://github.com/dohomi) |
 | **[Storyblok Generate Component Typings](https://github.com/dohomi/storyblok-generate-ts)** <br/> NodeJS tool to auto generate TypeScript types based on your components.x.json file | [dohomi](http://github.com/dohomi) |
 | **[Storyblok Migrate](https://github.com/maoberlehner/storyblok-migrate)** <br/> Migration tool from Storyblok (Import/Export of schemas and content) | [maoberlehner](http://github.com/maoberlehner) |
+| **[Storyblok Toolkit](https://github.com/storyofams/storyblok-toolkit)** <br/> Batteries-included toolset for efficient development of React frontends with Storyblok | [storyofams](http://github.com/storyofams) |
 | **[Sb Mig](https://github.com/sb-mig/sb-mig)** <br/> CLI tool to handle migrations and components in Storyblok | [sb-mig](http://github.com/sb-mig) |
 <!-- AUTO-GENERATED-CONTENT:END -->
 ## Contributing
