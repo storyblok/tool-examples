@@ -71,6 +71,20 @@ This method can backup all the spaces in your account.
 sbBackup.backupAllSpaces()
 ```
 
+#### SbBackup.restoreAssets(spaceId, assetsIds)
+This method can restore one or more assets into your space. Currently this is available only for `local` backups and not for S3 buckets.
+
+`spaceId`: the ID of your Storyblok space
+`assetsIds`:  (optional) an array of assets IDs that you want to restore from the backup files. Example `[12345, 12346, 393089]`. If this parameter is empty, the script will restore all the assets from the storage.
+
+**Example**:
+```js
+// It will restore only 2 assets
+sbBackup.restoreAssets(1234, [78789,3332])
+// It will restore all the assets
+sbBackup.restoreAssets(1234) 
+```
+
 ### Data structure
 The script will store and organise the content by creating a folder for each space, the folder will have the id of the space. Inside the folder of the space there will be a folder with the id of each asset. Inside the folder of each asset there will be the asset itself and a file called `sb_asset_data_[TIMESTAMP].json` with the [Asset Object](https://www.storyblok.com/docs/api/management#core-resources/assets/the-asset-object) from the Storyblok MAPI. The structure will be the same for both the `local` and the `s3` backups.
 
