@@ -64,7 +64,7 @@ export default class Migration {
   stringifiedStoriesList: string;
   assetsList: SbAsset[];
   unusedAssetsList: SbAsset[];
-  foldersToCreate: any[];
+  foldersToCreate: SbFolder[];
   assets: Asset[];
   limit: number;
   offset: number;
