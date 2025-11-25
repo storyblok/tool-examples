@@ -4,7 +4,7 @@ import FormData from "form-data";
 import https from "https";
 import fs from "fs";
 import async from "async";
-import sizeOf from "image-size";
+import {imageSizeFromFile} from "image-size/fromFile";
 
 interface SbFolder {
   id: number;
@@ -313,9 +313,12 @@ export default class Migration {
         }
       );
       const assetsPageRequestTotal = assetsPageRequest.total || 1;
-      const pagesTotal = Math.ceil(assetsPageRequestTotal / 100);
+      // Calculating first page and last page based on VITE_OFFSET and VITE_LIMIT
+      const firstPageIndex = Math.floor(this.offset / 100) + 1;
+      const endPageLimit = Math.floor(this.limit / 100) + 1;
+      const lastPageIndex = this.limit > 0 ? endPageLimit : Math.ceil(assetsPageRequestTotal / 100);
       const assetsRequests = [] as Promise<ISbResult>[];
-      for (let i = 1; i <= pagesTotal; i++) {
+      for (let i = firstPageIndex; i <= lastPageIndex; i++) {
         assetsRequests.push(
           this.mapiClient.get(`spaces/${this.sourceSpaceId}/assets`, {
             per_page: 100,
@@ -324,7 +327,11 @@ export default class Migration {
         );
       }
       const assetsResponses = await Promise.all(assetsRequests);
-      this.assetsList = assetsResponses
+      // Slicing the array in case VITE_OFFSET and VITE_LIMIT are set
+      const sliceStart = this.offset % 100;
+      const sliceEnd = sliceStart + this.limit;
+      const slicedAssets = this.limit > 0 ? assetsResponses.slice(sliceStart, sliceEnd) : assetsResponses.slice(sliceStart);
+      this.assetsList = slicedAssets
         .map((r) => r.data.assets)
         .flat()
         .map((asset) => {
@@ -583,7 +590,7 @@ export default class Migration {
           )
         ) {
           try {
-            const dimensions = sizeOf(localAssetData.filepath);
+            const dimensions = await imageSizeFromFile(localAssetData.filepath);
             size = `${dimensions.width}x${dimensions.height}`;
           } catch (err) {
             console.log(
