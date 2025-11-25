@@ -327,13 +327,12 @@ export default class Migration {
         );
       }
       const assetsResponses = await Promise.all(assetsRequests);
+      const assetsResponsesData = assetsResponses.map((r) => r.data.assets).flat();
       // Slicing the array in case VITE_OFFSET and VITE_LIMIT are set
       const sliceStart = this.offset % 100;
       const sliceEnd = sliceStart + this.limit;
-      const slicedAssets = this.limit > 0 ? assetsResponses.slice(sliceStart, sliceEnd) : assetsResponses.slice(sliceStart);
+      const slicedAssets = this.limit > 0 ? assetsResponsesData.slice(sliceStart, sliceEnd) : assetsResponsesData.slice(sliceStart);
       this.assetsList = slicedAssets
-        .map((r) => r.data.assets)
-        .flat()
         .map((asset) => {
           delete asset.space_id;
           delete asset.created_at;
