@@ -12,8 +12,12 @@
     "async": "^3.2.0",
     "chalk": "^4.1.0",
     "form-data": "^3.0.0",
-    "image-size": "^1.1.1",
-    "storyblok-js-client": "^6.6.2",
+    "image-size": "^2.0.2",
+    "storyblok-js-client": "^7.2.0",
     "vite-node": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/async": "^3.2.25",
+    "@types/node": "^24.10.1"
   }
 }

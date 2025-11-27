@@ -9,6 +9,8 @@ interface ImportMetaEnv {
   readonly VITE_DETECT_IMAGE_SIZE?: "true" | "false";
   readonly VITE_USED_ASSETS_ONLY?: "true" | "false";
   readonly VITE_DUPLICATE_FOLDERS?: "true" | "false";
+  readonly VITE_LIMIT: string;
+  readonly VITE_OFFSET: string;
 }
 
 interface ImportMeta {
