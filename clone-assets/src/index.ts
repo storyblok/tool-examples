@@ -4,7 +4,7 @@ import FormData from "form-data";
 import https from "https";
 import fs from "fs";
 import async from "async";
-import {imageSizeFromFile} from "image-size/fromFile";
+import { imageSizeFromFile } from "image-size/fromFile";
 
 interface SbFolder {
   id: number;
@@ -68,6 +68,7 @@ export default class Migration {
   assets: Asset[];
   limit: number;
   offset: number;
+  importAssetsByIds: string[];
 
   constructor(
     oauth: string,
@@ -81,7 +82,8 @@ export default class Migration {
     usedAssets: boolean,
     duplicateFolders: boolean,
     limit: number,
-    offset: number
+    offset: number,
+    assetsIds: string[]
   ) {
     this.targetSpaceToken = "";
     this.storiesList = [];
@@ -109,6 +111,7 @@ export default class Migration {
     this.duplicateFolders = duplicateFolders;
     this.limit = limit;
     this.offset = offset;
+    this.importAssetsByIds = assetsIds;
     this.mapiClient = new StoryblokClient({
       oauthToken: this.oauth,
       region: this.sourceRegion,
@@ -304,43 +307,66 @@ export default class Migration {
    */
   async getAssets() {
     this.stepMessage("3", `Fetching assets from source space.`);
+    let retrievedAssets = [];
     try {
-      const assetsPageRequest = await this.mapiClient.get(
-        `spaces/${this.sourceSpaceId}/assets`,
-        {
-          per_page: 100,
-          page: 1,
+      if (this.importAssetsByIds.length) {
+        const assetsRequests = [] as Promise<ISbResult>[];
+        for (let i = 0; i < this.importAssetsByIds.length; i++) {
+          const assetId = this.importAssetsByIds[i];
+          console.log(assetId)
+          assetsRequests.push(
+            this.mapiClient.get(
+              `spaces/${this.sourceSpaceId}/assets/${assetId}`
+            )
+          );
         }
-      );
-      const assetsPageRequestTotal = assetsPageRequest.total || 1;
-      // Calculating first page and last page based on VITE_OFFSET and VITE_LIMIT
-      const firstPageIndex = Math.floor(this.offset / 100) + 1;
-      const endPageLimit = Math.floor(this.limit / 100) + 1;
-      const lastPageIndex = this.limit > 0 ? endPageLimit : Math.ceil(assetsPageRequestTotal / 100);
-      const assetsRequests = [] as Promise<ISbResult>[];
-      for (let i = firstPageIndex; i <= lastPageIndex; i++) {
-        assetsRequests.push(
-          this.mapiClient.get(`spaces/${this.sourceSpaceId}/assets`, {
+        const assetsResponses = await Promise.all(assetsRequests);
+        retrievedAssets = assetsResponses.map((r) => r.data).flat();
+      } else {
+        const assetsPageRequest = await this.mapiClient.get(
+          `spaces/${this.sourceSpaceId}/assets`,
+          {
             per_page: 100,
-            page: i,
-          })
+            page: 1,
+          }
         );
+        const assetsPageRequestTotal = assetsPageRequest.total || 1;
+        // Calculating first page and last page based on VITE_OFFSET and VITE_LIMIT
+        const firstPageIndex = Math.floor(this.offset / 100) + 1;
+        const endPageLimit = Math.floor(this.limit / 100) + 1;
+        const lastPageIndex =
+          this.limit > 0
+            ? endPageLimit
+            : Math.ceil(assetsPageRequestTotal / 100);
+        const assetsRequests = [] as Promise<ISbResult>[];
+        for (let i = firstPageIndex; i <= lastPageIndex; i++) {
+          assetsRequests.push(
+            this.mapiClient.get(`spaces/${this.sourceSpaceId}/assets`, {
+              per_page: 100,
+              page: i,
+            })
+          );
+        }
+        const assetsResponses = await Promise.all(assetsRequests);
+        const assetsResponsesData = assetsResponses
+          .map((r) => r.data.assets)
+          .flat();
+        // Slicing the array in case VITE_OFFSET and VITE_LIMIT are set
+        const sliceStart = this.offset % 100;
+        const sliceEnd = sliceStart + this.limit;
+        retrievedAssets =
+          this.limit > 0
+            ? assetsResponsesData.slice(sliceStart, sliceEnd)
+            : assetsResponsesData.slice(sliceStart);
       }
-      const assetsResponses = await Promise.all(assetsRequests);
-      const assetsResponsesData = assetsResponses.map((r) => r.data.assets).flat();
-      // Slicing the array in case VITE_OFFSET and VITE_LIMIT are set
-      const sliceStart = this.offset % 100;
-      const sliceEnd = sliceStart + this.limit;
-      const slicedAssets = this.limit > 0 ? assetsResponsesData.slice(sliceStart, sliceEnd) : assetsResponsesData.slice(sliceStart);
-      this.assetsList = slicedAssets
-        .map((asset) => {
-          delete asset.space_id;
-          delete asset.created_at;
-          delete asset.updated_at;
-          delete asset.published_at;
-          delete asset.deleted_at;
-          return asset;
-        });
+      this.assetsList = retrievedAssets.map((asset) => {
+        delete asset.space_id;
+        delete asset.created_at;
+        delete asset.updated_at;
+        delete asset.published_at;
+        delete asset.deleted_at;
+        return asset;
+      });
       if (this.usedAssets) {
         this.assetsList = this.assetsList.filter((asset) => {
           const filename = this.getAssetFilename(asset.filename);
@@ -800,7 +826,7 @@ export default class Migration {
           "updated-stories": storiesWithUpdates,
           "uploaded-assets": this.assetsList,
           "created-folders": this.foldersToCreate,
-          "failed-assets": this.failedAssets
+          "failed-assets": this.failedAssets,
         },
         null,
         4
