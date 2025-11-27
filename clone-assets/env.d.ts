@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_DUPLICATE_FOLDERS?: "true" | "false";
   readonly VITE_LIMIT: string;
   readonly VITE_OFFSET: string;
+  readonly VITE_ASSETS_IDS:string;
 }
 
 interface ImportMeta {
