@@ -1,5 +1,7 @@
 interface ImportMetaEnv {
   readonly VITE_PERSONAL_ACCESS_TOKEN: string;
+  readonly VITE_SOURCE_PERSONAL_ACCESS_TOKEN?: string;
+  readonly VITE_TARGET_PERSONAL_ACCESS_TOKEN?: string;
   readonly VITE_SOURCE_SPACE_ID: number;
   readonly VITE_TARGET_SPACE_ID: number;
   readonly VITE_SIMULTANEOUS_UPLOADS: number;
