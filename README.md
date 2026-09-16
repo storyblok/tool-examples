@@ -1,3 +1,11 @@
+> [!IMPORTANT]
+> **This repository is archived and no longer maintained.**
+>
+> Storyblok plugin development has moved to **[pluginsblok](https://github.com/storyblok/pluginsblok)**, the Storyblok Plugins OSS monorepo. Templates, examples, issues and contributions all live there now.
+>
+> - **New location:** https://github.com/storyblok/pluginsblok
+> - **Plugin documentation:** https://www.storyblok.com/docs/plugins
+
 
 <img src="https://a.storyblok.com/f/51376/x/19b4879a86/logo.svg" width="200" alt="Storyblok Logo">
 
@@ -94,4 +102,3 @@ If you want to be listed in the [Example Repositories](#example-repositories), f
 
 
 </details>
-
