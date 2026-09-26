@@ -13,6 +13,8 @@ Clone Assets | A tool to clone assets from a space to its clone | [Christian Zop
 Copy the `.env.example` file to `.env` and fill out the variables. These are the parameters you will have to fill out:
 
 - `VITE_PERSONAL_ACCESS_TOKEN`: Personal Access Token from your account.
+- `VITE_SOURCE_PERSONAL_ACCESS_TOKEN` (optional): A separate token used only for the source space. When set, it takes precedence over `VITE_PERSONAL_ACCESS_TOKEN` for source requests, so you can scope it read-only. Falls back to `VITE_PERSONAL_ACCESS_TOKEN` when not set.
+- `VITE_TARGET_PERSONAL_ACCESS_TOKEN` (optional): A separate token used only for the target space. When set, it takes precedence over `VITE_PERSONAL_ACCESS_TOKEN` for target requests. Falls back to `VITE_PERSONAL_ACCESS_TOKEN` when not set.
 - `VITE_SOURCE_SPACE_ID`: Source space id.
 - `VITE_TARGET_SPACE_ID`: Target space id.
 - `VITE_SIMULTANEOUS_UPLOADS` (optional, default is 20): Max simultaneous uploads.

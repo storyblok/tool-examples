@@ -40,7 +40,8 @@ interface LocalAssetData {
 export default class Migration {
   sourceSpaceId: number;
   targetSpaceId: number;
-  oauth: string;
+  sourceOauth: string;
+  targetOauth: string;
   simultaneousUploads: number;
   sourceRegion: string;
   targetRegion: string;
@@ -71,7 +72,8 @@ export default class Migration {
   importAssetsByIds: string[];
 
   constructor(
-    oauth: string,
+    sourceOauth: string,
+    targetOauth: string,
     sourceSpaceId: number,
     targetSpaceId: number,
     simultaneousUploads: number,
@@ -95,7 +97,8 @@ export default class Migration {
     this.assets = [];
     this.sourceSpaceId = sourceSpaceId;
     this.targetSpaceId = targetSpaceId;
-    this.oauth = oauth;
+    this.sourceOauth = sourceOauth;
+    this.targetOauth = targetOauth;
     this.simultaneousUploads = simultaneousUploads || 20;
     this.sourceRegion = (sourceRegion || "eu").toLowerCase();
     this.targetRegion = (targetRegion || "eu").toLowerCase();
@@ -112,17 +115,16 @@ export default class Migration {
     this.limit = limit;
     this.offset = offset;
     this.importAssetsByIds = assetsIds;
+    // Separate clients per space so each can carry a least-privilege token:
+    // the source token can be read-only, keeping the source space safe.
     this.mapiClient = new StoryblokClient({
-      oauthToken: this.oauth,
+      oauthToken: this.sourceOauth,
       region: this.sourceRegion,
     });
-    this.targetMapiClient =
-      this.sourceRegion === this.targetRegion
-        ? this.mapiClient
-        : new StoryblokClient({
-            oauthToken: this.oauth,
-            region: this.targetRegion,
-          });
+    this.targetMapiClient = new StoryblokClient({
+      oauthToken: this.targetOauth,
+      region: this.targetRegion,
+    });
     this.stepsTotal = this.clearSource ? 8 : 7;
   }
 

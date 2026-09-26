@@ -1,6 +1,14 @@
 import Migration from "./src/index.js";
 
-const paToken = import.meta.env.VITE_PERSONAL_ACCESS_TOKEN;
+// Optionally use two least-privilege tokens: a read-only source token and a
+// write target token. Falls back to the single VITE_PERSONAL_ACCESS_TOKEN
+// when only one is provided.
+const sourcePaToken =
+  import.meta.env.VITE_SOURCE_PERSONAL_ACCESS_TOKEN ||
+  import.meta.env.VITE_PERSONAL_ACCESS_TOKEN;
+const targetPaToken =
+  import.meta.env.VITE_TARGET_PERSONAL_ACCESS_TOKEN ||
+  import.meta.env.VITE_PERSONAL_ACCESS_TOKEN;
 const sourceSpaceId = import.meta.env.VITE_SOURCE_SPACE_ID;
 const targetSpaceId = import.meta.env.VITE_TARGET_SPACE_ID;
 const simultaneousUploads = import.meta.env.VITE_SIMULTANEOUS_UPLOADS;
@@ -21,7 +29,8 @@ const assetsIds =
     : [];
 
 const migration = new Migration(
-  paToken,
+  sourcePaToken,
+  targetPaToken,
   sourceSpaceId,
   targetSpaceId,
   simultaneousUploads,
