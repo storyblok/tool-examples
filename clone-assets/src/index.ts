@@ -115,6 +115,7 @@ export default class Migration {
     this.mapiClient = new StoryblokClient({
       oauthToken: this.oauth,
       region: this.sourceRegion,
+      rateLimit: 3,
     });
     this.targetMapiClient =
       this.sourceRegion === this.targetRegion
@@ -122,6 +123,7 @@ export default class Migration {
         : new StoryblokClient({
             oauthToken: this.oauth,
             region: this.targetRegion,
+            rateLimit: 3,
           });
     this.stepsTotal = this.clearSource ? 8 : 7;
   }
@@ -213,18 +215,32 @@ export default class Migration {
       if (this.cdnApiClient) {
         const links = await this.cdnApiClient.getAll("cdn/links", {
           version: "draft",
-          per_page: 25,
+          per_page: 100,
         });
-        const storiesResponsesManagement = await Promise.all(
-          links.map((link) =>
-            this.targetMapiClient.get(
+        // Fetch full story content with bounded concurrency. An unbounded
+        // Promise.all fires one Management API request per story at once,
+        // which floods the rate limit on large spaces and never completes.
+        let fetched = 0;
+        this.storiesList = await async.mapLimit(
+          links,
+          this.simultaneousUploads,
+          async (link: { id: number }) => {
+            const r = await this.targetMapiClient.get(
               `spaces/${this.targetSpaceId}/stories/${link.id}`
-            )
-          )
+            );
+            this.stepMessage(
+              "1",
+              ``,
+              `${++fetched} of ${links.length} stories fetched from target space`
+            );
+            return r.data.story;
+          }
         );
-        this.storiesList = storiesResponsesManagement.map((r) => r.data.story);
         this.stringifiedStoriesList = JSON.stringify(this.storiesList);
-        this.stepMessageEnd("1", `Stories fetched from target space.`);
+        this.stepMessageEnd(
+          "1",
+          `Fetched ${this.storiesList.length} stories from target space.`
+        );
       } else {
         this.migrationError("The CDN API client is not initialized");
       }
